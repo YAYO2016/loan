@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.MessageManageDao">
+    <resultMap id="MessageInfoDtoMap" type="com.loan.service.model.dto.MessageInfoDto" extends="MessageInfoMap">
+        <result property="createUserName" column="create_user_name"/>
+    </resultMap>
+
+    <select id="countMessageInfoDto" parameterType="map" resultType="int">
+        select COUNT(cnm.msg_id) as create_user_name from crdt_notice_mgr cnm
+        left join cfg_user cu on cnm.create_user = cu.user_id
+        <include refid="select_page_where_clause"/>
+    </select>
+
+    <select id="listMessageInfoDto" parameterType="map" resultMap="MessageInfoDtoMap">
+        select cnm.*,cu.user_name as create_user_name from crdt_notice_mgr cnm
+        left join cfg_user cu on cnm.create_user = cu.user_id
+        <include refid="select_page_where_clause"/>
+        order by cnm.send_time is not null, cnm.send_time desc, cnm.create_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <sql id="select_page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="keyWord != null">and (cnm.msg_title like concat('%',#{keyWord},'%') or cnm.msg_content like concat('%',#{keyWord},'%'))</if>
+            <if test="createUserName != null">and cu.user_name like concat('%',#{createUserName},'%')</if>
+            <if test="msgLevel != null">and cnm.msg_level = #{msgLevel}</if>
+            <if test="msgStatus != null">and cnm.msg_status = #{msgStatus}</if>
+            <if test="null != startSendTime">and cnm.send_time &gt;= #{startSendTime}</if>
+            <if test="null != endSendTime">and cnm.send_time &lt;= #{endSendTime}</if>
+        </trim>
+    </sql>
+
+</mapper>

@@ -1,0 +1,43 @@
+$wrapperWidth: 700px;
+$loginFontSize: 20px;
+$loanBackGroundColor: #36A9CE;
+$loanTitleBackGroundColor: #F2F2F2;
+.Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: $loginFontSize;
+
+  .title {
+    text-align: center;
+    height: 50px;
+    width: $wrapperWidth;
+    line-height: 50px;
+    background: $loanTitleBackGroundColor;
+  }
+
+  .content {
+    width: $wrapperWidth;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .loan-search, .loan-introduce {
+      background: $loanBackGroundColor;
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  .authority {
+    text-align: center;
+    width: $wrapperWidth;
+    line-height: 50px;
+    background: $loanTitleBackGroundColor;
+  }
+}

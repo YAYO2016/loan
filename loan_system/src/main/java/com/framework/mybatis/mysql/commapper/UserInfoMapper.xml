@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.mybatis.mysql.commapper.UserInfoMapper" >
+
+  <select id="selectUserInfo" resultType="java.util.Map" parameterType="java.lang.String" >
+    select a.user_id userId, a.user_name userName, a.org_id orgId, a.m_phone msisdn, a.email_address email,b.org_name orgName,c.role_id roleId,f.FUNC_ID menuId from 
+	(select  * from  cfg_user  a where a.user_id = #{id,jdbcType=VARCHAR}) a inner JOIN cfg_org b   on b.ORG_ID=a.ORG_ID inner JOIN cfg_user_role c on a.USER_ID=c.USER_ID 
+	inner join  cfg_role_func d  on c.ROLE_ID=d.ROLE_ID  inner join  dict_sys_func f  on f.FUNC_ID=d.FUNC_ID
+  </select>
+
+  
+  <!--select menu info  -->
+  <select id="selectMenuInfo" resultType="java.util.Map" >
+   select t.func_id menuId,t.func_name menuName,t.menu_picture menuPictureId,
+	t.super_func_id superId,t.func_url url,t.seq_num orderBy from dict_sys_func t
+	 where t.FUNC_ID in 
+	<foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+	  #{id}
+	</foreach>
+  </select>
+  
+ 
+</mapper>

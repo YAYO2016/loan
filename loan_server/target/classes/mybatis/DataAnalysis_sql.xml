@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.DataAnalysisDao">
+    <select id="getCompanyDay"  resultType="java.util.Map">
+    	SELECT
+			SUM(t.case_es) as money,
+			DATE_FORMAT(t.insert_time, '%Y-%m-%d') as date,
+			SUM(t1.case_num) as cate_num
+			
+		FROM
+			st_case_fee_stats t,
+			st_case_stats t1
+		WHERE
+				DATE_FORMAT(t1.insert_time, '%Y-%m-%d') = DATE_FORMAT(t.insert_time, '%Y-%m-%d')
+		AND	DATE_FORMAT(t1.insert_time, '%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT( #{startTime}, '%Y-%m-%d')
+		AND DATE_FORMAT(t1.insert_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+		AND	DATE_FORMAT(t.insert_time, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT( #{startTime}, '%Y-%m-%d')
+		AND DATE_FORMAT(t.insert_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+		<if test="org_id!=null">
+		AND  t.org_id=#{org_id}
+		AND  t1.org_id=#{org_id}
+		</if>
+		<if test="user_id!=null">
+		AND  t.user_id=#{user_id}
+		AND  t1.user_id=#{user_id}
+		</if>
+		GROUP BY DATE_FORMAT(t.insert_time, '%Y-%m-%d')
+    </select>
+    
+    
+    <select id="getCompanyCount"  resultType="java.util.Map">
+    	SELECT
+			SUM(t.case_es) as money,
+			SUM(t1.case_num) as cate_num,
+			(SELECT count(*) from cfg_user ) as userCount
+		FROM
+			st_case_fee_stats t,
+			st_case_stats t1
+    </select>
+    
+    
+    
+    <select id="getCompanyMonth"  resultType="java.util.Map">
+		SELECT
+			SUM(t.case_es) AS money,
+			concat(t.mon_num, '月') AS date,
+			SUM(t1.case_num) AS cate_num
+		FROM
+			st_case_fee_stats t,
+			st_case_stats t1
+		WHERE
+			DATE_FORMAT(t1.insert_time, '%Y-%m') = DATE_FORMAT(t.insert_time, '%Y-%m')
+		AND (DATE_FORMAT(t1.insert_time, '%Y%m')+0) <![CDATA[ >= ]]> (DATE_FORMAT(#{startTime}, '%Y%m')+0)
+		AND (DATE_FORMAT(t1.insert_time, '%Y%m')+0) <![CDATA[ >= ]]> (DATE_FORMAT(#{endTime}, '%Y%m')+0)
+		AND (DATE_FORMAT(t.insert_time, '%Y%m')+0) <![CDATA[ >= ]]> (DATE_FORMAT(#{startTime}, '%Y%m')+0)
+		AND (DATE_FORMAT(t.insert_time, '%Y%m')+0) <![CDATA[ >= ]]>  (DATE_FORMAT(#{endTime}, '%Y%m')+0)
+		<if test="org_id!=null">
+		AND  t.org_id=#{org_id}
+		AND  t1.org_id=#{org_id}
+		</if>
+		<if test="user_id!=null">
+		AND  t.user_id=#{user_id}
+		AND  t1.user_id=#{user_id}
+		</if>
+		GROUP BY
+			t.mon_num
+    </select>
+    
+    
+    <select id="getcaseNumByType"  resultType="java.util.Map">
+	   
+	   SELECT
+			CASE
+		WHEN t1.case_type = 1 THEN
+			'住房贷款一手房'
+		WHEN t1.case_type = 2 THEN
+			'住房贷款二手房'
+		END case_type,
+		(select  COALESCE(sum(t.case_num),0)  from  st_case_stats t  where  t.case_status = 'STATUS_101' and t.case_type=t1.case_type ) as  addNum,
+		(select  COALESCE(sum(t.case_num),0)  from  st_case_stats t  where  t.case_status = 'STATUS_124' and t.case_type=t1.case_type ) as endNum,
+		(select  COALESCE(sum(t.case_num),0)  from  st_case_stats t  where  t.case_status<![CDATA[ <> ]]>'STATUS_101' and t.case_status<![CDATA[ <> ]]>'STATUS_124' and t.case_type=t1.case_type ) as ingNum
+		FROM
+			st_case_stats t1
+		where 
+		 	DATE_FORMAT(t1.insert_time, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT( #{startTime}, '%Y-%m-%d')
+		AND DATE_FORMAT(t1.insert_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+		<if test="org_id!=null">
+		AND  t1.org_id=#{org_id}
+		</if>
+	GROUP BY t1.case_type
+	   
+    </select>
+    
+    
+    <select id="getcaseNumByCaseType"  resultType="java.util.Map">
+	    SELECT
+			CASE
+		WHEN t1.case_sub_type = 'RESERVE' THEN
+			'公积金贷款'
+		WHEN t1.case_sub_type = 'SYNDICATED' THEN
+			'组合贷款'
+		WHEN t1.case_sub_type = 'COMMERCIAL' THEN
+			'商业贷款'
+		END case_sub_type,
+		(select  COALESCE(sum(t.case_num),0)  from  st_case_stats t  where  t.case_status = 'STATUS_101' and t.case_sub_type=t1.case_sub_type ) as  addNum,
+		(select  COALESCE(sum(t.case_num),0)  from  st_case_stats t  where  t.case_status = 'STATUS_124' and t.case_sub_type=t1.case_sub_type ) as endNum,
+		(select  COALESCE(sum(t.case_num),0)  from  st_case_stats t  where  t.case_status<![CDATA[ <> ]]>'STATUS_101' and t.case_status<![CDATA[ <> ]]>'STATUS_124' and t.case_sub_type=t1.case_sub_type ) as ingNum
+		
+		FROM
+			st_case_stats t1
+		where 
+		 	DATE_FORMAT(t1.insert_time, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT( #{startTime}, '%Y-%m-%d')
+		AND DATE_FORMAT(t1.insert_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+		<if test="org_id!=null">
+		AND  t1.org_id=#{org_id}
+		</if>
+		GROUP BY
+			t1.case_sub_type
+    </select>
+    
+    
+     <select id="getcaseNumByOrgId"  resultType="java.util.Map">
+	    SELECT
+			sum(t.case_num) case_num,
+			t1.org_name
+		FROM
+			st_case_stats t,
+		  	cfg_org t1
+		where t.org_id=t1.org_id
+			AND	DATE_FORMAT(t.insert_time, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT( #{startTime}, '%Y-%m-%d')
+			AND DATE_FORMAT(t.insert_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+			<if test="org_id!=null">
+			AND  t.org_id=#{org_id}
+			</if>
+			
+		GROUP BY
+			t.org_id
+    </select>
+    
+    
+    <select id="orgInfo"  resultType="java.util.Map">
+	   SELECT org_id,org_name from cfg_org  where org_id <![CDATA[ <> ]]> 0
+    </select>
+    
+    
+    <select id="orgInfoByOrgId"  resultType="java.util.Map">
+	   select  t.user_id,t.user_name from cfg_user t where org_id=#{org_id}
+    </select>
+    
+    
+    <select id="countUserPage" resultType="int" >
+	    select  count(*)  from (
+	    	select   
+				DATE_FORMAT(t1.insert_time, '%Y年%m月'),
+				t2.org_name,
+				t3.user_name,
+				(SELECT  COALESCE(sum(case_num),0)	 from  st_case_stats  a where  t1.user_id=a.user_id and a.case_status='STATUS_101') as addNum,
+				(SELECT  COALESCE(sum(case_num),0)	 from  st_case_stats  a where  t1.user_id=a.user_id and a.case_status<![CDATA[ <> ]]>'STATUS_101' and a.case_status<![CDATA[ <> ]]>'STATUS_124') as editNum,
+				(SELECT  COALESCE(sum(case_num),0)	 from  st_case_stats  a where  t1.user_id=a.user_id and a.case_status='STATUS_124') as endNum,
+				SUM(t.case_es)	case_es		
+			from 
+				st_case_fee_stats t,
+				st_case_stats t1,
+				cfg_org t2,
+				cfg_user t3
+			where 
+				  t.user_id=t1.user_id
+			and t.org_id=t2.org_id
+			and t3.user_id=t.user_id
+			<if test="org_id!=null">
+				and t.org_id=#{org_id}
+			</if>
+			<if test="user_id!=null">
+				and t.user_id=#{user_id}
+			</if>
+			<if test="month!=null">
+				AND (DATE_FORMAT(t.insert_time, '%Y%m')+0) <![CDATA[ >= ]]> (DATE_FORMAT(#{month}, '%Y%m')+0)
+			</if>
+	    )  t
+     
+    </select>
+    
+    <select id="listUserPage" resultType="java.util.Map" >
+    	select   
+			DATE_FORMAT(t1.insert_time, '%Y年%m月')  dateTime,
+			t2.org_name,
+			t2.org_id,
+			t3.user_name,
+			t3.user_id,
+			(SELECT  COALESCE(sum(case_num),0)	 from  st_case_stats  a where  t1.user_id=a.user_id and a.case_status='STATUS_101') as addNum,
+			(SELECT  COALESCE(sum(case_num),0)	 from  st_case_stats  a where  t1.user_id=a.user_id and a.case_status<![CDATA[ <> ]]>'STATUS_101' and a.case_status<![CDATA[ <> ]]>'STATUS_124') as editNum,
+			(SELECT  COALESCE(sum(case_num),0)	 from  st_case_stats  a where  t1.user_id=a.user_id and a.case_status='STATUS_124') as endNum,
+			SUM(t.case_es)	case_es		
+		from 
+			st_case_fee_stats t,
+			st_case_stats t1,
+			cfg_org t2,
+			cfg_user t3
+		where 
+		 	t.user_id=t1.user_id
+		and t.org_id=t2.org_id
+		and t3.user_id=t.user_id
+		<if test="org_id!=null">
+			and t.org_id=#{org_id}
+		</if>
+		<if test="user_id!=null">
+			and t.user_id=#{user_id}
+		</if>
+		<if test="month!=null">
+			AND (DATE_FORMAT(t.insert_time, '%Y%m')+0) <![CDATA[ = ]]> (DATE_FORMAT(#{month}, '%Y%m')+0)
+		</if>
+		
+    </select>
+    
+    <select id="getCompanyInfoByOrgId"  resultType="java.util.Map">
+    	select  
+			t.org_name,
+			t1.user_name,
+			t1.phone,
+			(select count(*) from  cfg_user a where  a.org_id=#{org_id}) as userCount,
+			(select count(*) from  st_case_stats b where  b.org_id=#{org_id}) as caseCount,
+			(select count(*) from  st_case_fee_stats c where  c.org_id=#{org_id}) as caseFeeCount,
+			(select  COALESCE(sum(d.case_num),0)	 from  st_case_stats d where  d.org_id=#{org_id} and d.case_status='STATUS_101')  addNum,
+			(SELECT  COALESCE(sum(e.case_num),0)	 from  st_case_stats  e where  e.org_id=#{org_id} and e.case_status <![CDATA[ <> ]]> 'STATUS_101' and e.case_status<![CDATA[ <> ]]>'STATUS_124') as editNum,
+			(SELECT  COALESCE(sum(f.case_num),0)	 from  st_case_stats  f where  f.org_id=#{org_id} and f.case_status='STATUS_124') as endNum
+		 from  
+			cfg_org  t,
+			cfg_user t1
+		where   
+			t.org_id=t1.org_id
+			and t.org_id=#{org_id}
+    </select>
+    
+    <select id="getUserCaseNumByOrgId"  resultType="java.util.Map">
+    	SELECT
+			COALESCE (sum(t.case_num), 0) case_num,
+			t1.user_id,
+			t1.user_name
+		FROM
+			st_case_stats t,
+			cfg_user t1
+		WHERE
+			t.user_id = t1.user_id
+		AND	DATE_FORMAT(t.insert_time, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT( #{startTime}, '%Y-%m-%d')
+		AND DATE_FORMAT(t.insert_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+		GROUP BY
+			t.user_id
+    </select>
+    
+    <select id="getUserInfoByOrgId" resultType="java.util.Map">
+    select  
+		t.user_id ,
+		t.user_name,
+		t1.org_id,
+		t1.org_name,
+		t3.role_name,
+		t3.role_id,
+		t.phone,
+		COALESCE (sum(t4.case_num), 0) case_num,
+		(select  COALESCE(sum(d.case_num),0)	 from  st_case_stats d where  d.user_id=#{user_id} and d.case_status='STATUS_101')  addNum,
+		(SELECT  COALESCE(sum(e.case_num),0)	 from  st_case_stats  e where  e.user_id=#{user_id} and e.case_status <![CDATA[ <> ]]> 'STATUS_101' and e.case_status<![CDATA[ <> ]]>'STATUS_124') as editNum,
+		(SELECT  COALESCE(sum(f.case_num),0)	 from  st_case_stats  f where  f.user_id=#{user_id} and f.case_status='STATUS_124') as endNum
+		from 
+		cfg_user t
+		LEFT JOIN	cfg_org t1  on t.org_id = t1.org_id
+		LEFT JOIN	cfg_user_role t2 on t.user_id = t2.user_id
+		LEFT JOIN	dict_role t3 on t2.role_id = t3.role_id
+		LEFT JOIN	st_case_stats t4 on t.user_id=t4.user_id
+		where  
+		t.user_id=#{user_id}
+	    
+    </select>
+    
+    
+</mapper>

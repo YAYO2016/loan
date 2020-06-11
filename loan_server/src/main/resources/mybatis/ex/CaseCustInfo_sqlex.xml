@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseCustInfoDao">
+
+    <delete id="deleteEntityByCustType" parameterType="map">
+        delete from crdt_case_cust_info where case_id = #{caseId} and case_cust_type = #{caseCustType}
+    </delete>
+</mapper>

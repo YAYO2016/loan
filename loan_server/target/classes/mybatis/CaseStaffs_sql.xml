@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseStaffsDao">
+    <resultMap id="CaseStaffsMap" type="com.loan.service.model.CaseStaffs">
+        <result property="caseId" column="case_id"/>
+        <result property="createId" column="create_id"/>
+        <result property="businessId" column="business_id"/>
+        <result property="riskId" column="risk_id"/>
+        <result property="financeId" column="finance_id"/>
+        <result property="fieldId" column="field_id"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.CaseStaffs">
+        INSERT INTO crdt_case_staffs (
+        <trim suffixOverrides=",">
+            case_id,
+            create_id,
+            business_id,
+            risk_id,
+            finance_id,
+            field_id,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{caseId},
+            #{createId},
+            #{businessId},
+            #{riskId},
+            #{financeId},
+            #{fieldId},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.CaseStaffs">
+        update crdt_case_staffs
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseId != null">case_id = #{caseId},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="businessId != null">business_id = #{businessId},</if>
+            <if test="riskId != null">risk_id = #{riskId},</if>
+            <if test="financeId != null">finance_id = #{financeId},</if>
+            <if test="fieldId != null">field_id = #{fieldId},</if>
+        </trim>
+        where case_id = #{caseId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from crdt_case_staffs where case_id = #{caseId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="CaseStaffsMap">
+        select * from crdt_case_staffs where case_id = #{caseId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="CaseStaffsMap" parameterType="com.loan.service.model.CaseStaffs">
+        select * from crdt_case_staffs
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="caseId != null">and case_id = #{caseId}</if>
+            <if test="createId != null">and create_id = #{createId}</if>
+            <if test="businessId != null">and business_id = #{businessId}</if>
+            <if test="riskId != null">and risk_id = #{riskId}</if>
+            <if test="financeId != null">and finance_id = #{financeId}</if>
+            <if test="fieldId != null">and field_id = #{fieldId}</if>
+        </trim>
+    </sql>
+</mapper>

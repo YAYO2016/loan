@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.mybatis.mysql.mapper.DictCaseFlowMapper" >
+  <resultMap id="BaseResultMap" type="com.framework.mybatis.mysql.pojo.DictCaseFlow" >
+    <result column="case_type" property="caseType" jdbcType="VARCHAR" />
+    <result column="scage_id" property="scageId" jdbcType="VARCHAR" />
+    <result column="scage_name" property="scageName" jdbcType="VARCHAR" />
+    <result column="step_id" property="stepId" jdbcType="VARCHAR" />
+    <result column="step_name" property="stepName" jdbcType="VARCHAR" />
+    <result column="step_type" property="stepType" jdbcType="VARCHAR" />
+    <result column="next_scage_id" property="nextScageId" jdbcType="VARCHAR" />
+    <result column="next_step_id" property="nextStepId" jdbcType="VARCHAR" />
+    <result column="back_scage_id" property="backScageId" jdbcType="VARCHAR" />
+    <result column="back_step_id" property="backStepId" jdbcType="VARCHAR" />
+    <result column="days_limit" property="daysLimit" jdbcType="INTEGER" />
+    <result column="this_role_id" property="thisRoleId" jdbcType="VARCHAR" />
+    <result column="next_role_id" property="nextRoleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    case_type, scage_id, scage_name, step_id, step_name, step_type, next_scage_id, next_step_id, 
+    back_scage_id, back_step_id, days_limit, this_role_id, next_role_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.framework.mybatis.mysql.pojo.DictCaseFlowExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dict_case_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.framework.mybatis.mysql.pojo.DictCaseFlowExample" >
+    delete from dict_case_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.framework.mybatis.mysql.pojo.DictCaseFlow" >
+    insert into dict_case_flow (case_type, scage_id, scage_name, 
+      step_id, step_name, step_type, 
+      next_scage_id, next_step_id, back_scage_id, 
+      back_step_id, days_limit, this_role_id, 
+      next_role_id)
+    values (#{caseType,jdbcType=VARCHAR}, #{scageId,jdbcType=VARCHAR}, #{scageName,jdbcType=VARCHAR}, 
+      #{stepId,jdbcType=VARCHAR}, #{stepName,jdbcType=VARCHAR}, #{stepType,jdbcType=VARCHAR}, 
+      #{nextScageId,jdbcType=VARCHAR}, #{nextStepId,jdbcType=VARCHAR}, #{backScageId,jdbcType=VARCHAR}, 
+      #{backStepId,jdbcType=VARCHAR}, #{daysLimit,jdbcType=INTEGER}, #{thisRoleId,jdbcType=VARCHAR}, 
+      #{nextRoleId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.framework.mybatis.mysql.pojo.DictCaseFlow" >
+    insert into dict_case_flow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseType != null" >
+        case_type,
+      </if>
+      <if test="scageId != null" >
+        scage_id,
+      </if>
+      <if test="scageName != null" >
+        scage_name,
+      </if>
+      <if test="stepId != null" >
+        step_id,
+      </if>
+      <if test="stepName != null" >
+        step_name,
+      </if>
+      <if test="stepType != null" >
+        step_type,
+      </if>
+      <if test="nextScageId != null" >
+        next_scage_id,
+      </if>
+      <if test="nextStepId != null" >
+        next_step_id,
+      </if>
+      <if test="backScageId != null" >
+        back_scage_id,
+      </if>
+      <if test="backStepId != null" >
+        back_step_id,
+      </if>
+      <if test="daysLimit != null" >
+        days_limit,
+      </if>
+      <if test="thisRoleId != null" >
+        this_role_id,
+      </if>
+      <if test="nextRoleId != null" >
+        next_role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseType != null" >
+        #{caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="scageId != null" >
+        #{scageId,jdbcType=VARCHAR},
+      </if>
+      <if test="scageName != null" >
+        #{scageName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepId != null" >
+        #{stepId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepName != null" >
+        #{stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepType != null" >
+        #{stepType,jdbcType=VARCHAR},
+      </if>
+      <if test="nextScageId != null" >
+        #{nextScageId,jdbcType=VARCHAR},
+      </if>
+      <if test="nextStepId != null" >
+        #{nextStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="backScageId != null" >
+        #{backScageId,jdbcType=VARCHAR},
+      </if>
+      <if test="backStepId != null" >
+        #{backStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="daysLimit != null" >
+        #{daysLimit,jdbcType=INTEGER},
+      </if>
+      <if test="thisRoleId != null" >
+        #{thisRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="nextRoleId != null" >
+        #{nextRoleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.framework.mybatis.mysql.pojo.DictCaseFlowExample" resultType="java.lang.Integer" >
+    select count(*) from dict_case_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dict_case_flow
+    <set >
+      <if test="record.caseType != null" >
+        case_type = #{record.caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scageId != null" >
+        scage_id = #{record.scageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scageName != null" >
+        scage_name = #{record.scageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepId != null" >
+        step_id = #{record.stepId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepName != null" >
+        step_name = #{record.stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepType != null" >
+        step_type = #{record.stepType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nextScageId != null" >
+        next_scage_id = #{record.nextScageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nextStepId != null" >
+        next_step_id = #{record.nextStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backScageId != null" >
+        back_scage_id = #{record.backScageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backStepId != null" >
+        back_step_id = #{record.backStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.daysLimit != null" >
+        days_limit = #{record.daysLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.thisRoleId != null" >
+        this_role_id = #{record.thisRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nextRoleId != null" >
+        next_role_id = #{record.nextRoleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dict_case_flow
+    set case_type = #{record.caseType,jdbcType=VARCHAR},
+      scage_id = #{record.scageId,jdbcType=VARCHAR},
+      scage_name = #{record.scageName,jdbcType=VARCHAR},
+      step_id = #{record.stepId,jdbcType=VARCHAR},
+      step_name = #{record.stepName,jdbcType=VARCHAR},
+      step_type = #{record.stepType,jdbcType=VARCHAR},
+      next_scage_id = #{record.nextScageId,jdbcType=VARCHAR},
+      next_step_id = #{record.nextStepId,jdbcType=VARCHAR},
+      back_scage_id = #{record.backScageId,jdbcType=VARCHAR},
+      back_step_id = #{record.backStepId,jdbcType=VARCHAR},
+      days_limit = #{record.daysLimit,jdbcType=INTEGER},
+      this_role_id = #{record.thisRoleId,jdbcType=VARCHAR},
+      next_role_id = #{record.nextRoleId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

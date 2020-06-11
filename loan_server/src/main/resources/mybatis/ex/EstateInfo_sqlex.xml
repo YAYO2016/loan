@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.EstateInfoDao">
+
+    <resultMap id="EstateInfoDtoMap" type="com.loan.service.model.dto.EstateInfoDto" extends="EstateInfoMap">
+
+    </resultMap>
+
+    <select id="countEstateInfoDto" parameterType="map" resultType="int">
+        select COUNT(estate_id) from cfg_estate ce
+        left join cfg_developer cd on ce.developer_id = cd.developer_id
+        <include refid="select_page_where_clause"/>
+    </select>
+
+    <select id="listEstateInfoDto" parameterType="map" resultMap="EstateInfoDtoMap">
+        select * from cfg_estate ce
+        left join cfg_developer cd on ce.developer_id = cd.developer_id
+        <include refid="select_page_where_clause"/>
+        order by ce.create_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <sql id="select_page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="developerName != null">and developer_name like concat('%',#{developerName},'%')</if>
+            <if test="estateName != null">and estate_name like concat('%',#{estateName},'%')</if>
+        </trim>
+    </sql>
+
+</mapper>

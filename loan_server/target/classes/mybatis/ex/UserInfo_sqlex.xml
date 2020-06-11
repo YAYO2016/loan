@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.UserInfoDao">
+
+    <resultMap id="UserInfoDtoMap" type="com.loan.service.model.dto.UserInfoDto" extends="UserInfoMap">
+        <result property="createUserName" column="create_user_name"/>
+        <result property="orgName" column="org_name"/>
+    </resultMap>
+
+    <select id="countUserInfoDto" parameterType="map" resultType="int">
+        select COUNT(cu.user_id) from cfg_user cu
+        <include refid="select_page_where_clause"/>
+    </select>
+
+    <select id="listUserInfoDto" parameterType="map" resultMap="UserInfoDtoMap">
+        select cu.*,create_cu.user_name as create_user_name,co.org_name
+        from cfg_user cu
+        left join cfg_user create_cu on cu.create_user_id = create_cu.user_id
+        left join cfg_org co on cu.org_id = co.org_id
+        <include refid="select_page_where_clause"/>
+        order by cu.modify_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <select id="getUserInfoDtoByAccount" resultMap="UserInfoMap">
+        select * from cfg_user where login_account = #{loginAccount}
+    </select>
+
+    <update id="clearUserOrgInfo">
+        update cfg_user set org_id = null where org_id = #{orgId}
+    </update>
+
+    <select id="getUserInfoByOrgId" resultMap="UserInfoMap">
+        select * from cfg_user where org_id = #{orgId}
+    </select>
+
+    <select id="getUserInfoDtoByUserId" resultMap="UserInfoDtoMap">
+        select cu.*,create_cu.user_name as create_user_name,co.org_name
+        from cfg_user cu
+        left join cfg_user create_cu on cu.create_user_id = create_cu.user_id
+        left join cfg_org co on cu.org_id = co.org_id
+        where cu.user_id = #{userId}
+    </select>
+
+    <select id="getUserListByRoleDict" resultMap="UserInfoMap">
+        select distinct cu.*
+        from cfg_user cu,cfg_user_role cur
+        where cu.user_id = cur.user_id and cur.role_id = #{roleDict}
+    </select>
+
+    <select id="getUserByIds" resultMap="UserInfoMap">
+        select * from cfg_user where 1=1
+        <if test="idList != null">
+            and user_id in
+            <foreach collection="idList" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <sql id="select_page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="userName != null">and cu.user_name like concat('%',#{userName},'%')</if>
+        </trim>
+    </sql>
+</mapper>

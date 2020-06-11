@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.mybatis.mysql.mapper.DictAgencyMapper" >
+  <resultMap id="BaseResultMap" type="com.framework.mybatis.mysql.pojo.DictAgency" >
+    <result column="agency_id" property="agencyId" jdbcType="VARCHAR" />
+    <result column="agency_name" property="agencyName" jdbcType="VARCHAR" />
+    <result column="agency_phone" property="agencyPhone" jdbcType="VARCHAR" />
+    <result column="agency_address" property="agencyAddress" jdbcType="VARCHAR" />
+    <result column="boss_name" property="bossName" jdbcType="VARCHAR" />
+    <result column="boss_mphone" property="bossMphone" jdbcType="VARCHAR" />
+    <result column="boss_lphone" property="bossLphone" jdbcType="VARCHAR" />
+    <result column="pm_name" property="pmName" jdbcType="VARCHAR" />
+    <result column="pm_mphone" property="pmMphone" jdbcType="VARCHAR" />
+    <result column="pm_lphone" property="pmLphone" jdbcType="VARCHAR" />
+    <result column="bm_name" property="bmName" jdbcType="VARCHAR" />
+    <result column="bm_mphone" property="bmMphone" jdbcType="VARCHAR" />
+    <result column="bm_lphone" property="bmLphone" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="khh_name" property="khhName" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    agency_id, agency_name, agency_phone, agency_address, boss_name, boss_mphone, boss_lphone, 
+    pm_name, pm_mphone, pm_lphone, bm_name, bm_mphone, bm_lphone, account_name, khh_name, 
+    account_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.framework.mybatis.mysql.pojo.DictAgencyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dict_agency
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.framework.mybatis.mysql.pojo.DictAgencyExample" >
+    delete from dict_agency
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.framework.mybatis.mysql.pojo.DictAgency" >
+    insert into dict_agency (agency_id, agency_name, agency_phone, 
+      agency_address, boss_name, boss_mphone, 
+      boss_lphone, pm_name, pm_mphone, 
+      pm_lphone, bm_name, bm_mphone, 
+      bm_lphone, account_name, khh_name, 
+      account_id)
+    values (#{agencyId,jdbcType=VARCHAR}, #{agencyName,jdbcType=VARCHAR}, #{agencyPhone,jdbcType=VARCHAR}, 
+      #{agencyAddress,jdbcType=VARCHAR}, #{bossName,jdbcType=VARCHAR}, #{bossMphone,jdbcType=VARCHAR}, 
+      #{bossLphone,jdbcType=VARCHAR}, #{pmName,jdbcType=VARCHAR}, #{pmMphone,jdbcType=VARCHAR}, 
+      #{pmLphone,jdbcType=VARCHAR}, #{bmName,jdbcType=VARCHAR}, #{bmMphone,jdbcType=VARCHAR}, 
+      #{bmLphone,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, #{khhName,jdbcType=VARCHAR}, 
+      #{accountId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.framework.mybatis.mysql.pojo.DictAgency" >
+    insert into dict_agency
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agencyId != null" >
+        agency_id,
+      </if>
+      <if test="agencyName != null" >
+        agency_name,
+      </if>
+      <if test="agencyPhone != null" >
+        agency_phone,
+      </if>
+      <if test="agencyAddress != null" >
+        agency_address,
+      </if>
+      <if test="bossName != null" >
+        boss_name,
+      </if>
+      <if test="bossMphone != null" >
+        boss_mphone,
+      </if>
+      <if test="bossLphone != null" >
+        boss_lphone,
+      </if>
+      <if test="pmName != null" >
+        pm_name,
+      </if>
+      <if test="pmMphone != null" >
+        pm_mphone,
+      </if>
+      <if test="pmLphone != null" >
+        pm_lphone,
+      </if>
+      <if test="bmName != null" >
+        bm_name,
+      </if>
+      <if test="bmMphone != null" >
+        bm_mphone,
+      </if>
+      <if test="bmLphone != null" >
+        bm_lphone,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="khhName != null" >
+        khh_name,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agencyId != null" >
+        #{agencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyName != null" >
+        #{agencyName,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyPhone != null" >
+        #{agencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyAddress != null" >
+        #{agencyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bossName != null" >
+        #{bossName,jdbcType=VARCHAR},
+      </if>
+      <if test="bossMphone != null" >
+        #{bossMphone,jdbcType=VARCHAR},
+      </if>
+      <if test="bossLphone != null" >
+        #{bossLphone,jdbcType=VARCHAR},
+      </if>
+      <if test="pmName != null" >
+        #{pmName,jdbcType=VARCHAR},
+      </if>
+      <if test="pmMphone != null" >
+        #{pmMphone,jdbcType=VARCHAR},
+      </if>
+      <if test="pmLphone != null" >
+        #{pmLphone,jdbcType=VARCHAR},
+      </if>
+      <if test="bmName != null" >
+        #{bmName,jdbcType=VARCHAR},
+      </if>
+      <if test="bmMphone != null" >
+        #{bmMphone,jdbcType=VARCHAR},
+      </if>
+      <if test="bmLphone != null" >
+        #{bmLphone,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="khhName != null" >
+        #{khhName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.framework.mybatis.mysql.pojo.DictAgencyExample" resultType="java.lang.Integer" >
+    select count(*) from dict_agency
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dict_agency
+    <set >
+      <if test="record.agencyId != null" >
+        agency_id = #{record.agencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agencyName != null" >
+        agency_name = #{record.agencyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agencyPhone != null" >
+        agency_phone = #{record.agencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agencyAddress != null" >
+        agency_address = #{record.agencyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bossName != null" >
+        boss_name = #{record.bossName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bossMphone != null" >
+        boss_mphone = #{record.bossMphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bossLphone != null" >
+        boss_lphone = #{record.bossLphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pmName != null" >
+        pm_name = #{record.pmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pmMphone != null" >
+        pm_mphone = #{record.pmMphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pmLphone != null" >
+        pm_lphone = #{record.pmLphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bmName != null" >
+        bm_name = #{record.bmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bmMphone != null" >
+        bm_mphone = #{record.bmMphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bmLphone != null" >
+        bm_lphone = #{record.bmLphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountName != null" >
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.khhName != null" >
+        khh_name = #{record.khhName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountId != null" >
+        account_id = #{record.accountId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dict_agency
+    set agency_id = #{record.agencyId,jdbcType=VARCHAR},
+      agency_name = #{record.agencyName,jdbcType=VARCHAR},
+      agency_phone = #{record.agencyPhone,jdbcType=VARCHAR},
+      agency_address = #{record.agencyAddress,jdbcType=VARCHAR},
+      boss_name = #{record.bossName,jdbcType=VARCHAR},
+      boss_mphone = #{record.bossMphone,jdbcType=VARCHAR},
+      boss_lphone = #{record.bossLphone,jdbcType=VARCHAR},
+      pm_name = #{record.pmName,jdbcType=VARCHAR},
+      pm_mphone = #{record.pmMphone,jdbcType=VARCHAR},
+      pm_lphone = #{record.pmLphone,jdbcType=VARCHAR},
+      bm_name = #{record.bmName,jdbcType=VARCHAR},
+      bm_mphone = #{record.bmMphone,jdbcType=VARCHAR},
+      bm_lphone = #{record.bmLphone,jdbcType=VARCHAR},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      khh_name = #{record.khhName,jdbcType=VARCHAR},
+      account_id = #{record.accountId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="queryList"  resultType="java.util.Map">
+  	select  * from  dict_agency  where 1=1
+  	<if test="map.agencyName !=null and map.agencyName !=''">
+  		and  agency_name like "%"#{map.agencyName,jdbcType=VARCHAR}"%"
+  	</if>
+  	
+  </select>
+  
+</mapper>

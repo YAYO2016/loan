@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseCfgInfoDao">
+    <delete id="clearCaseCfgInfo">
+        delete from crdt_case_cfg_info where case_id = #{caseId}
+        <if test="caseCfgTypes != null">
+            and cfg_type in
+            <foreach collection="caseCfgTypes" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+</mapper>

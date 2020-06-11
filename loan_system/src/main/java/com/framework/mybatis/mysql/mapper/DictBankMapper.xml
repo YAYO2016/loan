@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.mybatis.mysql.mapper.DictBankMapper" >
+  <resultMap id="BaseResultMap" type="com.framework.mybatis.mysql.pojo.DictBank" >
+    <result column="bank_id" property="bankId" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="branch_id" property="branchId" jdbcType="VARCHAR" />
+    <result column="branch_name" property="branchName" jdbcType="VARCHAR" />
+    <result column="sub_branch_id" property="subBranchId" jdbcType="VARCHAR" />
+    <result column="sub_branch_name" property="subBranchName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bank_id, bank_name, branch_id, branch_name, sub_branch_id, sub_branch_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.framework.mybatis.mysql.pojo.DictBankExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dict_bank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.framework.mybatis.mysql.pojo.DictBankExample" >
+    delete from dict_bank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.framework.mybatis.mysql.pojo.DictBank" >
+    insert into dict_bank (bank_id, bank_name, branch_id, 
+      branch_name, sub_branch_id, sub_branch_name
+      )
+    values (#{bankId,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{branchId,jdbcType=VARCHAR}, 
+      #{branchName,jdbcType=VARCHAR}, #{subBranchId,jdbcType=VARCHAR}, #{subBranchName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.framework.mybatis.mysql.pojo.DictBank" >
+    insert into dict_bank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bankId != null" >
+        bank_id,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="branchId != null" >
+        branch_id,
+      </if>
+      <if test="branchName != null" >
+        branch_name,
+      </if>
+      <if test="subBranchId != null" >
+        sub_branch_id,
+      </if>
+      <if test="subBranchName != null" >
+        sub_branch_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bankId != null" >
+        #{bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="branchId != null" >
+        #{branchId,jdbcType=VARCHAR},
+      </if>
+      <if test="branchName != null" >
+        #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="subBranchId != null" >
+        #{subBranchId,jdbcType=VARCHAR},
+      </if>
+      <if test="subBranchName != null" >
+        #{subBranchName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.framework.mybatis.mysql.pojo.DictBankExample" resultType="java.lang.Integer" >
+    select count(*) from dict_bank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dict_bank
+    <set >
+      <if test="record.bankId != null" >
+        bank_id = #{record.bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null" >
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.branchId != null" >
+        branch_id = #{record.branchId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.branchName != null" >
+        branch_name = #{record.branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subBranchId != null" >
+        sub_branch_id = #{record.subBranchId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subBranchName != null" >
+        sub_branch_name = #{record.subBranchName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dict_bank
+    set bank_id = #{record.bankId,jdbcType=VARCHAR},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      branch_id = #{record.branchId,jdbcType=VARCHAR},
+      branch_name = #{record.branchName,jdbcType=VARCHAR},
+      sub_branch_id = #{record.subBranchId,jdbcType=VARCHAR},
+      sub_branch_name = #{record.subBranchName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  	<select id="queryList"  resultType="java.util.Map">
+  	select  * from  dict_bank  where 1=1
+  	<if test="map.subBranchName !=null and map.subBranchName !=''">
+  		and  sub_branch_name like "%"#{map.subBranchName,jdbcType=VARCHAR}"%"
+  	</if>
+  	<if test="map.bankName !=null and map.bankName !=''">
+  		and  bank_name  like  "%"#{map.bankName,jdbcType=VARCHAR}"%"
+  	</if>
+  	<if test="map.branchName !=null and map.branchName !=''">
+  		and  branch_name  like  "%"#{map.branchName,jdbcType=VARCHAR}"%"
+  	</if>
+  	
+  </select>
+  
+  
+</mapper>

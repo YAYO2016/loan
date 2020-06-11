@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.RoleInfoDao">
+    <resultMap id="RoleInfoMap" type="com.loan.service.model.RoleInfo">
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleDesc" column="role_desc"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.RoleInfo">
+        INSERT INTO dict_role (
+        <trim suffixOverrides=",">
+            role_id,
+            role_name,
+            role_desc,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{roleId},
+            #{roleName},
+            #{roleDesc},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.RoleInfo">
+        update dict_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roleId != null">role_id = #{roleId},</if>
+            <if test="roleName != null">role_name = #{roleName},</if>
+            <if test="roleDesc != null">role_desc = #{roleDesc},</if>
+        </trim>
+        where role_id = #{roleId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="string">
+        delete from dict_role where role_id = #{roleId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="string" resultMap="RoleInfoMap">
+        select * from dict_role where role_id = #{roleId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="RoleInfoMap" parameterType="com.loan.service.model.RoleInfo">
+        select * from dict_role
+        <include refid="select_where_clause"/>
+        order by role_id asc
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="roleId != null">and role_id = #{roleId}</if>
+            <if test="roleName != null">and role_name = #{roleName}</if>
+            <if test="roleDesc != null">and role_desc = #{roleDesc}</if>
+        </trim>
+    </sql>
+</mapper>

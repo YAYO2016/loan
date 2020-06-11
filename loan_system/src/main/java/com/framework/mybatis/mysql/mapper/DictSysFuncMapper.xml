@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.mybatis.mysql.mapper.DictSysFuncMapper" >
+  <resultMap id="BaseResultMap" type="com.framework.mybatis.mysql.pojo.DictSysFunc" >
+    <result column="func_id" property="funcId" jdbcType="VARCHAR" />
+    <result column="func_name" property="funcName" jdbcType="VARCHAR" />
+    <result column="super_func_id" property="superFuncId" jdbcType="VARCHAR" />
+    <result column="func_type" property="funcType" jdbcType="VARCHAR" />
+    <result column="seq_num" property="seqNum" jdbcType="INTEGER" />
+    <result column="func_url" property="funcUrl" jdbcType="VARCHAR" />
+    <result column="menu_picture" property="menuPicture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    func_id, func_name, super_func_id, func_type, seq_num, func_url, menu_picture
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.framework.mybatis.mysql.pojo.DictSysFuncExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dict_sys_func
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.framework.mybatis.mysql.pojo.DictSysFuncExample" >
+    delete from dict_sys_func
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.framework.mybatis.mysql.pojo.DictSysFunc" >
+    insert into dict_sys_func (func_id, func_name, super_func_id, 
+      func_type, seq_num, func_url, 
+      menu_picture)
+    values (#{funcId,jdbcType=VARCHAR}, #{funcName,jdbcType=VARCHAR}, #{superFuncId,jdbcType=VARCHAR}, 
+      #{funcType,jdbcType=VARCHAR}, #{seqNum,jdbcType=INTEGER}, #{funcUrl,jdbcType=VARCHAR}, 
+      #{menuPicture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.framework.mybatis.mysql.pojo.DictSysFunc" >
+    insert into dict_sys_func
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        func_id,
+      </if>
+      <if test="funcName != null" >
+        func_name,
+      </if>
+      <if test="superFuncId != null" >
+        super_func_id,
+      </if>
+      <if test="funcType != null" >
+        func_type,
+      </if>
+      <if test="seqNum != null" >
+        seq_num,
+      </if>
+      <if test="funcUrl != null" >
+        func_url,
+      </if>
+      <if test="menuPicture != null" >
+        menu_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        #{funcId,jdbcType=VARCHAR},
+      </if>
+      <if test="funcName != null" >
+        #{funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="superFuncId != null" >
+        #{superFuncId,jdbcType=VARCHAR},
+      </if>
+      <if test="funcType != null" >
+        #{funcType,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        #{seqNum,jdbcType=INTEGER},
+      </if>
+      <if test="funcUrl != null" >
+        #{funcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuPicture != null" >
+        #{menuPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.framework.mybatis.mysql.pojo.DictSysFuncExample" resultType="java.lang.Integer" >
+    select count(*) from dict_sys_func
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dict_sys_func
+    <set >
+      <if test="record.funcId != null" >
+        func_id = #{record.funcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.funcName != null" >
+        func_name = #{record.funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superFuncId != null" >
+        super_func_id = #{record.superFuncId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.funcType != null" >
+        func_type = #{record.funcType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seqNum != null" >
+        seq_num = #{record.seqNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.funcUrl != null" >
+        func_url = #{record.funcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuPicture != null" >
+        menu_picture = #{record.menuPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dict_sys_func
+    set func_id = #{record.funcId,jdbcType=VARCHAR},
+      func_name = #{record.funcName,jdbcType=VARCHAR},
+      super_func_id = #{record.superFuncId,jdbcType=VARCHAR},
+      func_type = #{record.funcType,jdbcType=VARCHAR},
+      seq_num = #{record.seqNum,jdbcType=INTEGER},
+      func_url = #{record.funcUrl,jdbcType=VARCHAR},
+      menu_picture = #{record.menuPicture,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="queryList"  resultType="java.util.Map">
+  	select  * from dict_sys_func t   where 1=1
+  	<if test="map.funcName !=null and map.funcName !=''">
+  		and  t.func_name like "%"#{map.funcName,jdbcType=VARCHAR}"%"
+  	</if>
+  </select>
+  
+</mapper>

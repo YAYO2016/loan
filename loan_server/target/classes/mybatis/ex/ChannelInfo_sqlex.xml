@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.ChannelInfoDao">
+
+    <select id="countChannelInfo" parameterType="map" resultType="int">
+        select COUNT(channel_id) from cfg_channel
+        <include refid="select_page_where_clause"/>
+    </select>
+
+    <select id="listChannelInfo" parameterType="map" resultMap="ChannelInfoMap">
+        select * from cfg_channel
+        <include refid="select_page_where_clause"/>
+        order by modify_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+
+    <sql id="select_page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="channelName != null">and channel_name like concat('%',#{channelName},'%')</if>
+            <if test="channelType != null">AND channel_type = #{channelType}</if>
+            <if test="createUserName != null">and create_user_name like concat('%',#{createUserName},'%')</if>
+            <if test="createUser != null">AND create_user = #{createUser}</if>
+        </trim>
+    </sql>
+    
+    
+    <delete id="deleteCaseRel">
+    	delete  from  case_channel_rel  where  case_id=#{caseId}
+    </delete>
+    
+    <insert id="saveCaseRel">
+    	insert into case_channel_rel  values(#{caseId},#{channelId},sysdate());
+    </insert>
+    
+    <select id="areaName" resultType="java.util.Map">
+    	select area_id areaId,area_name areaName from   dict_area
+    </select>
+    
+</mapper>

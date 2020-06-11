@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseSecondHandHouseInfoDao">
+    <resultMap id="CaseSecondHandHouseInfoMap" type="com.loan.service.model.CaseSecondHandHouseInfo">
+        <result property="caseId" column="case_id"/>
+        <result property="houseProperty" column="house_property"/>
+        <result property="propertyRightsType" column="property_rights_type"/>
+        <result property="superviseType" column="supervise_type"/>
+        <result property="pretradeHouseAddr" column="pretrade_house_addr"/>
+        <result property="pretradeCqz" column="pretrade_cqz"/>
+        <result property="pretradeTdz" column="pretrade_tdz"/>
+        <result property="pretradeBdc" column="pretrade_bdc"/>
+        <result property="pretradeArea" column="pretrade_area"/>
+        <result property="pretradeFloor" column="pretrade_floor"/>
+        <result property="pretradeAge" column="pretrade_age"/>
+        <result property="pretradeNetPrice" column="pretrade_net_price"/>
+        <result property="pretradePrice" column="pretrade_price"/>
+        <result property="pretradeUnitPrice" column="pretrade_unit_price"/>
+        <result property="afttradeBdc" column="afttrade_bdc"/>
+        <result property="afttradeBdcArea" column="afttrade_bdc_area"/>
+        <result property="afttradeQsd" column="afttrade_qsd"/>
+        <result property="afttradeZzsd" column="afttrade_zzsd"/>
+        <result property="afttradeJsdj" column="afttrade_jsdj"/>
+        <result property="afttradeGhdj" column="afttrade_ghdj"/>
+        <result property="afttradeUnitPrice" column="afttrade_unit_price"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.CaseSecondHandHouseInfo">
+        INSERT INTO crdt_case_second_hand_house_info (
+        <trim suffixOverrides=",">
+            case_id,
+            house_property,
+            property_rights_type,
+            supervise_type,
+            pretrade_house_addr,
+            pretrade_cqz,
+            pretrade_tdz,
+            pretrade_bdc,
+            pretrade_area,
+            pretrade_floor,
+            pretrade_age,
+            pretrade_net_price,
+            pretrade_price,
+            pretrade_unit_price,
+            afttrade_bdc,
+            afttrade_bdc_area,
+            afttrade_qsd,
+            afttrade_zzsd,
+            afttrade_jsdj,
+            afttrade_ghdj,
+            afttrade_unit_price,
+            create_time,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{caseId},
+            #{houseProperty},
+            #{propertyRightsType},
+            #{superviseType},
+            #{pretradeHouseAddr},
+            #{pretradeCqz},
+            #{pretradeTdz},
+            #{pretradeBdc},
+            #{pretradeArea},
+            #{pretradeFloor},
+            #{pretradeAge},
+            #{pretradeNetPrice},
+            #{pretradePrice},
+            #{pretradeUnitPrice},
+            #{afttradeBdc},
+            #{afttradeBdcArea},
+            #{afttradeQsd},
+            #{afttradeZzsd},
+            #{afttradeJsdj},
+            #{afttradeGhdj},
+            #{afttradeUnitPrice},
+            #{createTime},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.CaseSecondHandHouseInfo">
+        update crdt_case_second_hand_house_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseId != null">case_id = #{caseId},</if>
+            <if test="houseProperty != null">house_property = #{houseProperty},</if>
+            <if test="propertyRightsType != null">property_rights_type = #{propertyRightsType},</if>
+            <if test="superviseType != null">supervise_type = #{superviseType},</if>
+            <if test="pretradeHouseAddr != null">pretrade_house_addr = #{pretradeHouseAddr},</if>
+            <if test="pretradeCqz != null">pretrade_cqz = #{pretradeCqz},</if>
+            <if test="pretradeTdz != null">pretrade_tdz = #{pretradeTdz},</if>
+            <if test="pretradeBdc != null">pretrade_bdc = #{pretradeBdc},</if>
+            <if test="pretradeArea != null">pretrade_area = #{pretradeArea},</if>
+            <if test="pretradeFloor != null">pretrade_floor = #{pretradeFloor},</if>
+            <if test="pretradeAge != null">pretrade_age = #{pretradeAge},</if>
+            <if test="pretradeNetPrice != null">pretrade_net_price = #{pretradeNetPrice},</if>
+            <if test="pretradePrice != null">pretrade_price = #{pretradePrice},</if>
+            <if test="pretradeUnitPrice != null">pretrade_unit_price = #{pretradeUnitPrice},</if>
+            <if test="afttradeBdc != null">afttrade_bdc = #{afttradeBdc},</if>
+            <if test="afttradeBdcArea != null">afttrade_bdc_area = #{afttradeBdcArea},</if>
+            <if test="afttradeQsd != null">afttrade_qsd = #{afttradeQsd},</if>
+            <if test="afttradeZzsd != null">afttrade_zzsd = #{afttradeZzsd},</if>
+            <if test="afttradeJsdj != null">afttrade_jsdj = #{afttradeJsdj},</if>
+            <if test="afttradeGhdj != null">afttrade_ghdj = #{afttradeGhdj},</if>
+            <if test="afttradeUnitPrice != null">afttrade_unit_price = #{afttradeUnitPrice},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where case_id = #{caseId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from crdt_case_second_hand_house_info where case_id = #{caseId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="CaseSecondHandHouseInfoMap">
+        select * from crdt_case_second_hand_house_info where case_id = #{caseId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="CaseSecondHandHouseInfoMap" parameterType="com.loan.service.model.CaseSecondHandHouseInfo">
+        select * from crdt_case_second_hand_house_info
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="caseId != null">and case_id = #{caseId}</if>
+            <if test="houseProperty != null">and house_property = #{houseProperty}</if>
+            <if test="propertyRightsType != null">and property_rights_type = #{propertyRightsType}</if>
+            <if test="superviseType != null">and supervise_type = #{superviseType}</if>
+            <if test="pretradeHouseAddr != null">and pretrade_house_addr = #{pretradeHouseAddr}</if>
+            <if test="pretradeCqz != null">and pretrade_cqz = #{pretradeCqz}</if>
+            <if test="pretradeTdz != null">and pretrade_tdz = #{pretradeTdz}</if>
+            <if test="pretradeBdc != null">and pretrade_bdc = #{pretradeBdc}</if>
+            <if test="pretradeArea != null">and pretrade_area = #{pretradeArea}</if>
+            <if test="pretradeFloor != null">and pretrade_floor = #{pretradeFloor}</if>
+            <if test="pretradeAge != null">and pretrade_age = #{pretradeAge}</if>
+            <if test="pretradeNetPrice != null">and pretrade_net_price = #{pretradeNetPrice}</if>
+            <if test="pretradePrice != null">and pretrade_price = #{pretradePrice}</if>
+            <if test="pretradeUnitPrice != null">and pretrade_unit_price = #{pretradeUnitPrice}</if>
+            <if test="afttradeBdc != null">and afttrade_bdc = #{afttradeBdc}</if>
+            <if test="afttradeBdcArea != null">and afttrade_bdc_area = #{afttradeBdcArea}</if>
+            <if test="afttradeQsd != null">and afttrade_qsd = #{afttradeQsd}</if>
+            <if test="afttradeZzsd != null">and afttrade_zzsd = #{afttradeZzsd}</if>
+            <if test="afttradeJsdj != null">and afttrade_jsdj = #{afttradeJsdj}</if>
+            <if test="afttradeGhdj != null">and afttrade_ghdj = #{afttradeGhdj}</if>
+            <if test="afttradeUnitPrice != null">and afttrade_unit_price = #{afttradeUnitPrice}</if>
+            <if test="createTime != null">and create_time = #{createTime}</if>
+        </trim>
+    </sql>
+</mapper>

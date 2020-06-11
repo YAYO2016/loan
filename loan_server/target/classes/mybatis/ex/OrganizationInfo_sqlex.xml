@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.OrganizationInfoDao">
+
+    <resultMap id="OrganizationInfoDtoMap" type="com.loan.service.model.dto.OrganizationInfoDto" extends="OrganizationInfoMap">
+        <result property="superOrgName" column="super_org_name"/>
+        <result property="orgLeaderName" column="org_leader_name"/>
+    </resultMap>
+
+
+    <select id="countOrganizationInfo" parameterType="map" resultType="int">
+        select COUNT(co.org_id) from cfg_org co
+        left join cfg_org sg on co.super_org_id = sg.org_id
+        left join cfg_user cu on co.org_leader_id = cu.user_id
+        <include refid="select_page_where_clause"/>
+    </select>
+
+    <select id="listOrganizationInfo" parameterType="map" resultMap="OrganizationInfoDtoMap">
+        select co.*,sg.org_name as super_org_name,cu.user_name as org_leader_name from cfg_org co
+        left join cfg_org sg on co.super_org_id = sg.org_id
+        left join cfg_user cu on co.org_leader_id = cu.user_id
+        <include refid="select_page_where_clause"/>
+        order by modify_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <select id="getOrganizationInfoDtoById" resultMap="OrganizationInfoDtoMap">
+        select co.*,sg.org_name as super_org_name,cu.user_name as org_leader_name from cfg_org co
+        left join cfg_org sg on co.super_org_id = sg.org_id
+        left join cfg_user cu on co.org_leader_id = cu.user_id
+        where co.org_id = #{orgId}
+    </select>
+
+    <sql id="select_page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="orgId != null">and co.org_id = #{orgId}</if>
+            <if test="orgName != null">and co.org_name like concat('%',#{orgName},'%')</if>
+        </trim>
+    </sql>
+</mapper>

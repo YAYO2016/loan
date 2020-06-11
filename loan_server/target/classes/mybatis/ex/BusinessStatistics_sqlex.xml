@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.BusinessStatisticsDao">
+
+    <resultMap id="CaseCountChartDtoMap" type="com.loan.service.model.dto.CaseCountChartDto">
+        <result property="period" column="period"/>
+        <result property="caseCount" column="case_count"/>
+    </resultMap>
+    <!--    1:日;2:周;3:月;4:季度;5:年;-->
+    <sql id="calcPeriod">
+        <if test="null != period">
+            <if test="1 == period">
+                date_format(create_time,'%Y%m%d')
+            </if>
+            <if test="2 == period">
+                date_format(create_time,'%x%v')
+            </if>
+            <if test="3 == period">
+                date_format(create_time,'%Y%m')
+            </if>
+            <if test="4 == period">
+                CONCAT(year(create_time),floor((date_format(create_time, '%m')+2)/3))
+            </if>
+            <if test="5 == period">
+                date_format(create_time,'%Y')
+            </if>
+        </if>
+    </sql>
+
+    <select id="getCasesCount" parameterType="map" resultMap="CaseCountChartDtoMap">
+        select
+        <include refid="calcPeriod"/>
+        as period
+        ,count(*) case_count
+        from crdt_case_base_info cbi
+        where (cbi.case_id in (
+        select distinct case_id from crdt_case_operate_log col
+        <if test="null != userIds">
+            where col.operator_id in
+            <foreach collection="userIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        )
+        <if test="null != userIds">
+            or cbi.create_user in
+            <foreach collection="userIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        )
+        and date_format(cbi.create_time,'%Y%m') &gt;= date_format(#{startDate},'%Y%m')
+        and date_format(cbi.create_time,'%Y%m') &lt;= date_format(#{endDate},'%Y%m')
+        and cbi.del_flag='0'
+        group by period
+        order by period asc
+    </select>
+
+</mapper>

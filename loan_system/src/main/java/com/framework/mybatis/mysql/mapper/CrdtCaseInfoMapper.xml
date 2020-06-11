@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.mybatis.mysql.mapper.CrdtCaseInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.framework.mybatis.mysql.pojo.CrdtCaseInfo" >
+    <result column="case_id" property="caseId" jdbcType="VARCHAR" />
+    <result column="case_name" property="caseName" jdbcType="VARCHAR" />
+    <result column="case_type" property="caseType" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="loan_fee" property="loanFee" jdbcType="DOUBLE" />
+    <result column="loan_year" property="loanYear" jdbcType="VARCHAR" />
+    <result column="repay_type" property="repayType" jdbcType="VARCHAR" />
+    <result column="loan_type" property="loanType" jdbcType="VARCHAR" />
+    <result column="loan_branch" property="loanBranch" jdbcType="VARCHAR" />
+    <result column="loan_subbranch" property="loanSubbranch" jdbcType="VARCHAR" />
+    <result column="contract_price" property="contractPrice" jdbcType="DOUBLE" />
+    <result column="exam_unit_price" property="examUnitPrice" jdbcType="DOUBLE" />
+    <result column="loan_scale" property="loanScale" jdbcType="DOUBLE" />
+    <result column="repay_account" property="repayAccount" jdbcType="VARCHAR" />
+    <result column="customer_manager" property="customerManager" jdbcType="VARCHAR" />
+    <result column="high_scale" property="highScale" jdbcType="REAL" />
+    <result column="pretrade_bus_type" property="pretradeBusType" jdbcType="VARCHAR" />
+    <result column="pretrade_house" property="pretradeHouse" jdbcType="VARCHAR" />
+    <result column="pretrade_cqz" property="pretradeCqz" jdbcType="VARCHAR" />
+    <result column="pretrade_tdz" property="pretradeTdz" jdbcType="VARCHAR" />
+    <result column="pretrade_area" property="pretradeArea" jdbcType="VARCHAR" />
+    <result column="pretrade_floor" property="pretradeFloor" jdbcType="VARCHAR" />
+    <result column="pretrade_age" property="pretradeAge" jdbcType="VARCHAR" />
+    <result column="pretrade_price" property="pretradePrice" jdbcType="DOUBLE" />
+    <result column="pretrade_unit_price" property="pretradeUnitPrice" jdbcType="DOUBLE" />
+    <result column="pretrade_peak_price" property="pretradePeakPrice" jdbcType="DOUBLE" />
+    <result column="seller_account" property="sellerAccount" jdbcType="VARCHAR" />
+    <result column="afttrade_bdc_id" property="afttradeBdcId" jdbcType="VARCHAR" />
+    <result column="afttrade_bdc_addrest" property="afttradeBdcAddrest" jdbcType="VARCHAR" />
+    <result column="afttrade_qyh" property="afttradeQyh" jdbcType="VARCHAR" />
+    <result column="afttrade_sjd" property="afttradeSjd" jdbcType="VARCHAR" />
+    <result column="afttrade_qsd" property="afttradeQsd" jdbcType="VARCHAR" />
+    <result column="afttrade_zzsd" property="afttradeZzsd" jdbcType="VARCHAR" />
+    <result column="agency_id" property="agencyId" jdbcType="VARCHAR" />
+    <result column="newhouse_qyz" property="newhouseQyz" jdbcType="VARCHAR" />
+    <result column="newhouse_tdnx" property="newhouseTdnx" jdbcType="VARCHAR" />
+    <result column="newhouse_lpmc" property="newhouseLpmc" jdbcType="VARCHAR" />
+    <result column="newhouse_addrest" property="newhouseAddrest" jdbcType="VARCHAR" />
+    <result column="newhouse_phone" property="newhousePhone" jdbcType="VARCHAR" />
+    <result column="newhouse_dever" property="newhouseDever" jdbcType="VARCHAR" />
+    <result column="newhouse_dever_ads" property="newhouseDeverAds" jdbcType="VARCHAR" />
+    <result column="newhouse_dever_ph" property="newhouseDeverPh" jdbcType="VARCHAR" />
+    <result column="newhouse_dever_act" property="newhouseDeverAct" jdbcType="VARCHAR" />
+    <result column="newhouse_dever_khg" property="newhouseDeverKhg" jdbcType="VARCHAR" />
+    <result column="newhouse_man" property="newhouseMan" jdbcType="VARCHAR" />
+    <result column="newhouse_man_ph" property="newhouseManPh" jdbcType="VARCHAR" />
+    <result column="newhouse_fin" property="newhouseFin" jdbcType="VARCHAR" />
+    <result column="newhouse_fin_ph" property="newhouseFinPh" jdbcType="VARCHAR" />
+    <result column="newhouse_seller" property="newhouseSeller" jdbcType="VARCHAR" />
+    <result column="newhouse_sel_ph" property="newhouseSelPh" jdbcType="VARCHAR" />
+    <result column="newhouse_sel_ph2" property="newhouseSelPh2" jdbcType="VARCHAR" />
+    <result column="newhouse_sel_actn" property="newhouseSelActn" jdbcType="VARCHAR" />
+    <result column="newhouse_sel_khh" property="newhouseSelKhh" jdbcType="VARCHAR" />
+    <result column="newhouse_sel_act" property="newhouseSelAct" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    case_id, case_name, case_type, create_user, create_time, loan_fee, loan_year, repay_type, 
+    loan_type, loan_branch, loan_subbranch, contract_price, exam_unit_price, loan_scale, 
+    repay_account, customer_manager, high_scale, pretrade_bus_type, pretrade_house, pretrade_cqz, 
+    pretrade_tdz, pretrade_area, pretrade_floor, pretrade_age, pretrade_price, pretrade_unit_price, 
+    pretrade_peak_price, seller_account, afttrade_bdc_id, afttrade_bdc_addrest, afttrade_qyh, 
+    afttrade_sjd, afttrade_qsd, afttrade_zzsd, agency_id, newhouse_qyz, newhouse_tdnx, 
+    newhouse_lpmc, newhouse_addrest, newhouse_phone, newhouse_dever, newhouse_dever_ads, 
+    newhouse_dever_ph, newhouse_dever_act, newhouse_dever_khg, newhouse_man, newhouse_man_ph, 
+    newhouse_fin, newhouse_fin_ph, newhouse_seller, newhouse_sel_ph, newhouse_sel_ph2, 
+    newhouse_sel_actn, newhouse_sel_khh, newhouse_sel_act
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.framework.mybatis.mysql.pojo.CrdtCaseInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from crdt_case_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.framework.mybatis.mysql.pojo.CrdtCaseInfoExample" >
+    delete from crdt_case_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.framework.mybatis.mysql.pojo.CrdtCaseInfo" >
+    insert into crdt_case_info (case_id, case_name, case_type, 
+      create_user, create_time, loan_fee, 
+      loan_year, repay_type, loan_type, 
+      loan_branch, loan_subbranch, contract_price, 
+      exam_unit_price, loan_scale, repay_account, 
+      customer_manager, high_scale, pretrade_bus_type, 
+      pretrade_house, pretrade_cqz, pretrade_tdz, 
+      pretrade_area, pretrade_floor, pretrade_age, 
+      pretrade_price, pretrade_unit_price, pretrade_peak_price, 
+      seller_account, afttrade_bdc_id, afttrade_bdc_addrest, 
+      afttrade_qyh, afttrade_sjd, afttrade_qsd, 
+      afttrade_zzsd, agency_id, newhouse_qyz, 
+      newhouse_tdnx, newhouse_lpmc, newhouse_addrest, 
+      newhouse_phone, newhouse_dever, newhouse_dever_ads, 
+      newhouse_dever_ph, newhouse_dever_act, newhouse_dever_khg, 
+      newhouse_man, newhouse_man_ph, newhouse_fin, 
+      newhouse_fin_ph, newhouse_seller, newhouse_sel_ph, 
+      newhouse_sel_ph2, newhouse_sel_actn, newhouse_sel_khh, 
+      newhouse_sel_act)
+    values (#{caseId,jdbcType=VARCHAR}, #{caseName,jdbcType=VARCHAR}, #{caseType,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{loanFee,jdbcType=DOUBLE}, 
+      #{loanYear,jdbcType=VARCHAR}, #{repayType,jdbcType=VARCHAR}, #{loanType,jdbcType=VARCHAR}, 
+      #{loanBranch,jdbcType=VARCHAR}, #{loanSubbranch,jdbcType=VARCHAR}, #{contractPrice,jdbcType=DOUBLE}, 
+      #{examUnitPrice,jdbcType=DOUBLE}, #{loanScale,jdbcType=DOUBLE}, #{repayAccount,jdbcType=VARCHAR}, 
+      #{customerManager,jdbcType=VARCHAR}, #{highScale,jdbcType=REAL}, #{pretradeBusType,jdbcType=VARCHAR}, 
+      #{pretradeHouse,jdbcType=VARCHAR}, #{pretradeCqz,jdbcType=VARCHAR}, #{pretradeTdz,jdbcType=VARCHAR}, 
+      #{pretradeArea,jdbcType=VARCHAR}, #{pretradeFloor,jdbcType=VARCHAR}, #{pretradeAge,jdbcType=VARCHAR}, 
+      #{pretradePrice,jdbcType=DOUBLE}, #{pretradeUnitPrice,jdbcType=DOUBLE}, #{pretradePeakPrice,jdbcType=DOUBLE}, 
+      #{sellerAccount,jdbcType=VARCHAR}, #{afttradeBdcId,jdbcType=VARCHAR}, #{afttradeBdcAddrest,jdbcType=VARCHAR}, 
+      #{afttradeQyh,jdbcType=VARCHAR}, #{afttradeSjd,jdbcType=VARCHAR}, #{afttradeQsd,jdbcType=VARCHAR}, 
+      #{afttradeZzsd,jdbcType=VARCHAR}, #{agencyId,jdbcType=VARCHAR}, #{newhouseQyz,jdbcType=VARCHAR}, 
+      #{newhouseTdnx,jdbcType=VARCHAR}, #{newhouseLpmc,jdbcType=VARCHAR}, #{newhouseAddrest,jdbcType=VARCHAR}, 
+      #{newhousePhone,jdbcType=VARCHAR}, #{newhouseDever,jdbcType=VARCHAR}, #{newhouseDeverAds,jdbcType=VARCHAR}, 
+      #{newhouseDeverPh,jdbcType=VARCHAR}, #{newhouseDeverAct,jdbcType=VARCHAR}, #{newhouseDeverKhg,jdbcType=VARCHAR}, 
+      #{newhouseMan,jdbcType=VARCHAR}, #{newhouseManPh,jdbcType=VARCHAR}, #{newhouseFin,jdbcType=VARCHAR}, 
+      #{newhouseFinPh,jdbcType=VARCHAR}, #{newhouseSeller,jdbcType=VARCHAR}, #{newhouseSelPh,jdbcType=VARCHAR}, 
+      #{newhouseSelPh2,jdbcType=VARCHAR}, #{newhouseSelActn,jdbcType=VARCHAR}, #{newhouseSelKhh,jdbcType=VARCHAR}, 
+      #{newhouseSelAct,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.framework.mybatis.mysql.pojo.CrdtCaseInfo" >
+    insert into crdt_case_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="caseName != null" >
+        case_name,
+      </if>
+      <if test="caseType != null" >
+        case_type,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="loanFee != null" >
+        loan_fee,
+      </if>
+      <if test="loanYear != null" >
+        loan_year,
+      </if>
+      <if test="repayType != null" >
+        repay_type,
+      </if>
+      <if test="loanType != null" >
+        loan_type,
+      </if>
+      <if test="loanBranch != null" >
+        loan_branch,
+      </if>
+      <if test="loanSubbranch != null" >
+        loan_subbranch,
+      </if>
+      <if test="contractPrice != null" >
+        contract_price,
+      </if>
+      <if test="examUnitPrice != null" >
+        exam_unit_price,
+      </if>
+      <if test="loanScale != null" >
+        loan_scale,
+      </if>
+      <if test="repayAccount != null" >
+        repay_account,
+      </if>
+      <if test="customerManager != null" >
+        customer_manager,
+      </if>
+      <if test="highScale != null" >
+        high_scale,
+      </if>
+      <if test="pretradeBusType != null" >
+        pretrade_bus_type,
+      </if>
+      <if test="pretradeHouse != null" >
+        pretrade_house,
+      </if>
+      <if test="pretradeCqz != null" >
+        pretrade_cqz,
+      </if>
+      <if test="pretradeTdz != null" >
+        pretrade_tdz,
+      </if>
+      <if test="pretradeArea != null" >
+        pretrade_area,
+      </if>
+      <if test="pretradeFloor != null" >
+        pretrade_floor,
+      </if>
+      <if test="pretradeAge != null" >
+        pretrade_age,
+      </if>
+      <if test="pretradePrice != null" >
+        pretrade_price,
+      </if>
+      <if test="pretradeUnitPrice != null" >
+        pretrade_unit_price,
+      </if>
+      <if test="pretradePeakPrice != null" >
+        pretrade_peak_price,
+      </if>
+      <if test="sellerAccount != null" >
+        seller_account,
+      </if>
+      <if test="afttradeBdcId != null" >
+        afttrade_bdc_id,
+      </if>
+      <if test="afttradeBdcAddrest != null" >
+        afttrade_bdc_addrest,
+      </if>
+      <if test="afttradeQyh != null" >
+        afttrade_qyh,
+      </if>
+      <if test="afttradeSjd != null" >
+        afttrade_sjd,
+      </if>
+      <if test="afttradeQsd != null" >
+        afttrade_qsd,
+      </if>
+      <if test="afttradeZzsd != null" >
+        afttrade_zzsd,
+      </if>
+      <if test="agencyId != null" >
+        agency_id,
+      </if>
+      <if test="newhouseQyz != null" >
+        newhouse_qyz,
+      </if>
+      <if test="newhouseTdnx != null" >
+        newhouse_tdnx,
+      </if>
+      <if test="newhouseLpmc != null" >
+        newhouse_lpmc,
+      </if>
+      <if test="newhouseAddrest != null" >
+        newhouse_addrest,
+      </if>
+      <if test="newhousePhone != null" >
+        newhouse_phone,
+      </if>
+      <if test="newhouseDever != null" >
+        newhouse_dever,
+      </if>
+      <if test="newhouseDeverAds != null" >
+        newhouse_dever_ads,
+      </if>
+      <if test="newhouseDeverPh != null" >
+        newhouse_dever_ph,
+      </if>
+      <if test="newhouseDeverAct != null" >
+        newhouse_dever_act,
+      </if>
+      <if test="newhouseDeverKhg != null" >
+        newhouse_dever_khg,
+      </if>
+      <if test="newhouseMan != null" >
+        newhouse_man,
+      </if>
+      <if test="newhouseManPh != null" >
+        newhouse_man_ph,
+      </if>
+      <if test="newhouseFin != null" >
+        newhouse_fin,
+      </if>
+      <if test="newhouseFinPh != null" >
+        newhouse_fin_ph,
+      </if>
+      <if test="newhouseSeller != null" >
+        newhouse_seller,
+      </if>
+      <if test="newhouseSelPh != null" >
+        newhouse_sel_ph,
+      </if>
+      <if test="newhouseSelPh2 != null" >
+        newhouse_sel_ph2,
+      </if>
+      <if test="newhouseSelActn != null" >
+        newhouse_sel_actn,
+      </if>
+      <if test="newhouseSelKhh != null" >
+        newhouse_sel_khh,
+      </if>
+      <if test="newhouseSelAct != null" >
+        newhouse_sel_act,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="caseName != null" >
+        #{caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null" >
+        #{caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanFee != null" >
+        #{loanFee,jdbcType=DOUBLE},
+      </if>
+      <if test="loanYear != null" >
+        #{loanYear,jdbcType=VARCHAR},
+      </if>
+      <if test="repayType != null" >
+        #{repayType,jdbcType=VARCHAR},
+      </if>
+      <if test="loanType != null" >
+        #{loanType,jdbcType=VARCHAR},
+      </if>
+      <if test="loanBranch != null" >
+        #{loanBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="loanSubbranch != null" >
+        #{loanSubbranch,jdbcType=VARCHAR},
+      </if>
+      <if test="contractPrice != null" >
+        #{contractPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="examUnitPrice != null" >
+        #{examUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="loanScale != null" >
+        #{loanScale,jdbcType=DOUBLE},
+      </if>
+      <if test="repayAccount != null" >
+        #{repayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="customerManager != null" >
+        #{customerManager,jdbcType=VARCHAR},
+      </if>
+      <if test="highScale != null" >
+        #{highScale,jdbcType=REAL},
+      </if>
+      <if test="pretradeBusType != null" >
+        #{pretradeBusType,jdbcType=VARCHAR},
+      </if>
+      <if test="pretradeHouse != null" >
+        #{pretradeHouse,jdbcType=VARCHAR},
+      </if>
+      <if test="pretradeCqz != null" >
+        #{pretradeCqz,jdbcType=VARCHAR},
+      </if>
+      <if test="pretradeTdz != null" >
+        #{pretradeTdz,jdbcType=VARCHAR},
+      </if>
+      <if test="pretradeArea != null" >
+        #{pretradeArea,jdbcType=VARCHAR},
+      </if>
+      <if test="pretradeFloor != null" >
+        #{pretradeFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="pretradeAge != null" >
+        #{pretradeAge,jdbcType=VARCHAR},
+      </if>
+      <if test="pretradePrice != null" >
+        #{pretradePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="pretradeUnitPrice != null" >
+        #{pretradeUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="pretradePeakPrice != null" >
+        #{pretradePeakPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="sellerAccount != null" >
+        #{sellerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="afttradeBdcId != null" >
+        #{afttradeBdcId,jdbcType=VARCHAR},
+      </if>
+      <if test="afttradeBdcAddrest != null" >
+        #{afttradeBdcAddrest,jdbcType=VARCHAR},
+      </if>
+      <if test="afttradeQyh != null" >
+        #{afttradeQyh,jdbcType=VARCHAR},
+      </if>
+      <if test="afttradeSjd != null" >
+        #{afttradeSjd,jdbcType=VARCHAR},
+      </if>
+      <if test="afttradeQsd != null" >
+        #{afttradeQsd,jdbcType=VARCHAR},
+      </if>
+      <if test="afttradeZzsd != null" >
+        #{afttradeZzsd,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyId != null" >
+        #{agencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseQyz != null" >
+        #{newhouseQyz,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseTdnx != null" >
+        #{newhouseTdnx,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseLpmc != null" >
+        #{newhouseLpmc,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseAddrest != null" >
+        #{newhouseAddrest,jdbcType=VARCHAR},
+      </if>
+      <if test="newhousePhone != null" >
+        #{newhousePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseDever != null" >
+        #{newhouseDever,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseDeverAds != null" >
+        #{newhouseDeverAds,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseDeverPh != null" >
+        #{newhouseDeverPh,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseDeverAct != null" >
+        #{newhouseDeverAct,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseDeverKhg != null" >
+        #{newhouseDeverKhg,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseMan != null" >
+        #{newhouseMan,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseManPh != null" >
+        #{newhouseManPh,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseFin != null" >
+        #{newhouseFin,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseFinPh != null" >
+        #{newhouseFinPh,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseSeller != null" >
+        #{newhouseSeller,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseSelPh != null" >
+        #{newhouseSelPh,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseSelPh2 != null" >
+        #{newhouseSelPh2,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseSelActn != null" >
+        #{newhouseSelActn,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseSelKhh != null" >
+        #{newhouseSelKhh,jdbcType=VARCHAR},
+      </if>
+      <if test="newhouseSelAct != null" >
+        #{newhouseSelAct,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.framework.mybatis.mysql.pojo.CrdtCaseInfoExample" resultType="java.lang.Integer" >
+    select count(*) from crdt_case_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update crdt_case_info
+    <set >
+      <if test="record.caseId != null" >
+        case_id = #{record.caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseName != null" >
+        case_name = #{record.caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseType != null" >
+        case_type = #{record.caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loanFee != null" >
+        loan_fee = #{record.loanFee,jdbcType=DOUBLE},
+      </if>
+      <if test="record.loanYear != null" >
+        loan_year = #{record.loanYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repayType != null" >
+        repay_type = #{record.repayType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanType != null" >
+        loan_type = #{record.loanType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanBranch != null" >
+        loan_branch = #{record.loanBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanSubbranch != null" >
+        loan_subbranch = #{record.loanSubbranch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractPrice != null" >
+        contract_price = #{record.contractPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.examUnitPrice != null" >
+        exam_unit_price = #{record.examUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.loanScale != null" >
+        loan_scale = #{record.loanScale,jdbcType=DOUBLE},
+      </if>
+      <if test="record.repayAccount != null" >
+        repay_account = #{record.repayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerManager != null" >
+        customer_manager = #{record.customerManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.highScale != null" >
+        high_scale = #{record.highScale,jdbcType=REAL},
+      </if>
+      <if test="record.pretradeBusType != null" >
+        pretrade_bus_type = #{record.pretradeBusType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pretradeHouse != null" >
+        pretrade_house = #{record.pretradeHouse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pretradeCqz != null" >
+        pretrade_cqz = #{record.pretradeCqz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pretradeTdz != null" >
+        pretrade_tdz = #{record.pretradeTdz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pretradeArea != null" >
+        pretrade_area = #{record.pretradeArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pretradeFloor != null" >
+        pretrade_floor = #{record.pretradeFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pretradeAge != null" >
+        pretrade_age = #{record.pretradeAge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pretradePrice != null" >
+        pretrade_price = #{record.pretradePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pretradeUnitPrice != null" >
+        pretrade_unit_price = #{record.pretradeUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pretradePeakPrice != null" >
+        pretrade_peak_price = #{record.pretradePeakPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sellerAccount != null" >
+        seller_account = #{record.sellerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afttradeBdcId != null" >
+        afttrade_bdc_id = #{record.afttradeBdcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afttradeBdcAddrest != null" >
+        afttrade_bdc_addrest = #{record.afttradeBdcAddrest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afttradeQyh != null" >
+        afttrade_qyh = #{record.afttradeQyh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afttradeSjd != null" >
+        afttrade_sjd = #{record.afttradeSjd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afttradeQsd != null" >
+        afttrade_qsd = #{record.afttradeQsd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afttradeZzsd != null" >
+        afttrade_zzsd = #{record.afttradeZzsd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agencyId != null" >
+        agency_id = #{record.agencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseQyz != null" >
+        newhouse_qyz = #{record.newhouseQyz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseTdnx != null" >
+        newhouse_tdnx = #{record.newhouseTdnx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseLpmc != null" >
+        newhouse_lpmc = #{record.newhouseLpmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseAddrest != null" >
+        newhouse_addrest = #{record.newhouseAddrest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhousePhone != null" >
+        newhouse_phone = #{record.newhousePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseDever != null" >
+        newhouse_dever = #{record.newhouseDever,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseDeverAds != null" >
+        newhouse_dever_ads = #{record.newhouseDeverAds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseDeverPh != null" >
+        newhouse_dever_ph = #{record.newhouseDeverPh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseDeverAct != null" >
+        newhouse_dever_act = #{record.newhouseDeverAct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseDeverKhg != null" >
+        newhouse_dever_khg = #{record.newhouseDeverKhg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseMan != null" >
+        newhouse_man = #{record.newhouseMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseManPh != null" >
+        newhouse_man_ph = #{record.newhouseManPh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseFin != null" >
+        newhouse_fin = #{record.newhouseFin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseFinPh != null" >
+        newhouse_fin_ph = #{record.newhouseFinPh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseSeller != null" >
+        newhouse_seller = #{record.newhouseSeller,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseSelPh != null" >
+        newhouse_sel_ph = #{record.newhouseSelPh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseSelPh2 != null" >
+        newhouse_sel_ph2 = #{record.newhouseSelPh2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseSelActn != null" >
+        newhouse_sel_actn = #{record.newhouseSelActn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseSelKhh != null" >
+        newhouse_sel_khh = #{record.newhouseSelKhh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newhouseSelAct != null" >
+        newhouse_sel_act = #{record.newhouseSelAct,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update crdt_case_info
+    set case_id = #{record.caseId,jdbcType=VARCHAR},
+      case_name = #{record.caseName,jdbcType=VARCHAR},
+      case_type = #{record.caseType,jdbcType=VARCHAR},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      loan_fee = #{record.loanFee,jdbcType=DOUBLE},
+      loan_year = #{record.loanYear,jdbcType=VARCHAR},
+      repay_type = #{record.repayType,jdbcType=VARCHAR},
+      loan_type = #{record.loanType,jdbcType=VARCHAR},
+      loan_branch = #{record.loanBranch,jdbcType=VARCHAR},
+      loan_subbranch = #{record.loanSubbranch,jdbcType=VARCHAR},
+      contract_price = #{record.contractPrice,jdbcType=DOUBLE},
+      exam_unit_price = #{record.examUnitPrice,jdbcType=DOUBLE},
+      loan_scale = #{record.loanScale,jdbcType=DOUBLE},
+      repay_account = #{record.repayAccount,jdbcType=VARCHAR},
+      customer_manager = #{record.customerManager,jdbcType=VARCHAR},
+      high_scale = #{record.highScale,jdbcType=REAL},
+      pretrade_bus_type = #{record.pretradeBusType,jdbcType=VARCHAR},
+      pretrade_house = #{record.pretradeHouse,jdbcType=VARCHAR},
+      pretrade_cqz = #{record.pretradeCqz,jdbcType=VARCHAR},
+      pretrade_tdz = #{record.pretradeTdz,jdbcType=VARCHAR},
+      pretrade_area = #{record.pretradeArea,jdbcType=VARCHAR},
+      pretrade_floor = #{record.pretradeFloor,jdbcType=VARCHAR},
+      pretrade_age = #{record.pretradeAge,jdbcType=VARCHAR},
+      pretrade_price = #{record.pretradePrice,jdbcType=DOUBLE},
+      pretrade_unit_price = #{record.pretradeUnitPrice,jdbcType=DOUBLE},
+      pretrade_peak_price = #{record.pretradePeakPrice,jdbcType=DOUBLE},
+      seller_account = #{record.sellerAccount,jdbcType=VARCHAR},
+      afttrade_bdc_id = #{record.afttradeBdcId,jdbcType=VARCHAR},
+      afttrade_bdc_addrest = #{record.afttradeBdcAddrest,jdbcType=VARCHAR},
+      afttrade_qyh = #{record.afttradeQyh,jdbcType=VARCHAR},
+      afttrade_sjd = #{record.afttradeSjd,jdbcType=VARCHAR},
+      afttrade_qsd = #{record.afttradeQsd,jdbcType=VARCHAR},
+      afttrade_zzsd = #{record.afttradeZzsd,jdbcType=VARCHAR},
+      agency_id = #{record.agencyId,jdbcType=VARCHAR},
+      newhouse_qyz = #{record.newhouseQyz,jdbcType=VARCHAR},
+      newhouse_tdnx = #{record.newhouseTdnx,jdbcType=VARCHAR},
+      newhouse_lpmc = #{record.newhouseLpmc,jdbcType=VARCHAR},
+      newhouse_addrest = #{record.newhouseAddrest,jdbcType=VARCHAR},
+      newhouse_phone = #{record.newhousePhone,jdbcType=VARCHAR},
+      newhouse_dever = #{record.newhouseDever,jdbcType=VARCHAR},
+      newhouse_dever_ads = #{record.newhouseDeverAds,jdbcType=VARCHAR},
+      newhouse_dever_ph = #{record.newhouseDeverPh,jdbcType=VARCHAR},
+      newhouse_dever_act = #{record.newhouseDeverAct,jdbcType=VARCHAR},
+      newhouse_dever_khg = #{record.newhouseDeverKhg,jdbcType=VARCHAR},
+      newhouse_man = #{record.newhouseMan,jdbcType=VARCHAR},
+      newhouse_man_ph = #{record.newhouseManPh,jdbcType=VARCHAR},
+      newhouse_fin = #{record.newhouseFin,jdbcType=VARCHAR},
+      newhouse_fin_ph = #{record.newhouseFinPh,jdbcType=VARCHAR},
+      newhouse_seller = #{record.newhouseSeller,jdbcType=VARCHAR},
+      newhouse_sel_ph = #{record.newhouseSelPh,jdbcType=VARCHAR},
+      newhouse_sel_ph2 = #{record.newhouseSelPh2,jdbcType=VARCHAR},
+      newhouse_sel_actn = #{record.newhouseSelActn,jdbcType=VARCHAR},
+      newhouse_sel_khh = #{record.newhouseSelKhh,jdbcType=VARCHAR},
+      newhouse_sel_act = #{record.newhouseSelAct,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

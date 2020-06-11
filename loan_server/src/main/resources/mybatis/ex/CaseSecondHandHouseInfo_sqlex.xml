@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseSecondHandHouseInfoDao">
+
+    <update id="clearBDCNo" parameterType="long">
+        update crdt_case_second_hand_house_info set pretrade_bdc = null where case_id = ${caseId}
+    </update>
+
+    <update id="clearCQZAndTDZ" parameterType="long">
+        update crdt_case_second_hand_house_info set pretrade_cqz = null,pretrade_tdz = null where case_id = ${caseId}
+    </update>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.DeveloperInfoDao">
+
+    <resultMap id="DeveloperInfoDtoMap" type="com.loan.service.model.dto.DeveloperInfoDto" extends="DeveloperInfoMap">
+        <result property="createUserName" column="create_user_name"/>
+    </resultMap>
+
+    <select id="getDeveloperInfoDto" resultMap="DeveloperInfoDtoMap" parameterType="long">
+        select cd.*,cu.user_name as create_user_name from cfg_developer cd
+        left join cfg_user cu on cd.create_user = cu.user_id
+        where cd.developer_id = #{developerId}
+    </select>
+</mapper>

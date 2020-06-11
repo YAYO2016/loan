@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.FeeItemInfoDao">
+    <resultMap id="FeeItemInfoMap" type="com.loan.service.model.FeeItemInfo">
+        <result property="itemId" column="item_id"/>
+        <result property="itemName" column="item_name"/>
+        <result property="itemDesc" column="item_desc"/>
+        <result property="itemPrice" column="item_price"/>
+        <result property="itemRate" column="item_rate"/>
+        <result property="optional" column="optional"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.FeeItemInfo">
+        INSERT INTO cfg_fee_item (
+        <trim suffixOverrides=",">
+            item_id,
+            item_name,
+            item_desc,
+            item_price,
+            item_rate,
+            optional,
+            create_time,
+            modify_time,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{itemId},
+            #{itemName},
+            #{itemDesc},
+            #{itemPrice},
+            #{itemRate},
+            #{optional},
+            #{createTime},
+            #{modifyTime},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.FeeItemInfo">
+        update cfg_fee_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemId != null">item_id = #{itemId},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="itemDesc != null">item_desc = #{itemDesc},</if>
+            <if test="itemPrice != null">item_price = #{itemPrice},</if>
+            <if test="itemRate != null">item_rate = #{itemRate},</if>
+            <if test="optional != null">optional = #{optional},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+        </trim>
+        where item_id = #{itemId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from cfg_fee_item where item_id = #{itemId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="FeeItemInfoMap">
+        select * from cfg_fee_item where item_id = #{itemId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="FeeItemInfoMap" parameterType="com.loan.service.model.FeeItemInfo">
+        select * from cfg_fee_item
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="itemId != null">and item_id = #{itemId}</if>
+            <if test="itemName != null">and item_name = #{itemName}</if>
+            <if test="itemDesc != null">and item_desc = #{itemDesc}</if>
+            <if test="itemPrice != null">and item_price = #{itemPrice}</if>
+            <if test="itemRate != null">and item_rate = #{itemRate}</if>
+            <if test="optional != null">and optional = #{optional}</if>
+            <if test="createTime != null">and create_time = #{createTime}</if>
+            <if test="modifyTime != null">and modify_time = #{modifyTime}</if>
+        </trim>
+    </sql>
+</mapper>

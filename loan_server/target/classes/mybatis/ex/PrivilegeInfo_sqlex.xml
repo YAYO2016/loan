@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.PrivilegeInfoDao">
+
+    <resultMap id="RolePrivilegesMap" type="com.loan.service.model.RolePrivileges">
+        <result property="roleId" column="role_id"/>
+        <result property="checkedPrivileges" column="checked_privileges"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="insertRolePrivileges" parameterType="com.loan.service.model.RolePrivileges">
+        INSERT INTO cfg_role_privileges (
+        <trim suffixOverrides=",">
+            role_id,
+            checked_privileges,
+            create_time,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{roleId},
+            #{checkedPrivileges},
+            #{createTime},
+        </trim>
+        )
+    </insert>
+
+    <select id="getRolePrivilegesByRoleId" parameterType="string" resultMap="RolePrivilegesMap">
+        select * from cfg_role_privileges where role_id = #{roleId}
+    </select>
+
+    <select id="getRolePrivilegesByUserId" parameterType="Long" resultMap="RolePrivilegesMap">
+        select * from cfg_role_privileges where role_id in (
+        select role_id from cfg_user_role where user_id = #{userId}
+        )
+    </select>
+
+    <delete id="deleteRolePrivilegesByRoleId" parameterType="string">
+        delete from cfg_role_privileges where role_id = #{roleId}
+    </delete>
+</mapper>

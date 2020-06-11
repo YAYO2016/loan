@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.BranchInfoDao">
+    <resultMap id="BranchInfoMap" type="com.loan.service.model.BranchInfo">
+        <result property="branchId" column="branch_id"/>
+        <result property="bankId" column="bank_id"/>
+        <result property="branchName" column="branch_name"/>
+        <result property="managerName" column="manager_name"/>
+        <result property="managerPhone" column="manager_phone"/>
+        <result property="branchDesc" column="branch_desc"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.BranchInfo">
+        INSERT INTO cfg_branch (
+        <trim suffixOverrides=",">
+            branch_id,
+            bank_id,
+            branch_name,
+            manager_name,
+            manager_phone,
+            branch_desc,
+            create_time,
+            modify_time,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{branchId},
+            #{bankId},
+            #{branchName},
+            #{managerName},
+            #{managerPhone},
+            #{branchDesc},
+            #{createTime},
+            #{modifyTime},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.BranchInfo">
+        update cfg_branch
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="branchId != null">branch_id = #{branchId},</if>
+            <if test="bankId != null">bank_id = #{bankId},</if>
+            <if test="branchName != null">branch_name = #{branchName},</if>
+            <if test="managerName != null">manager_name = #{managerName},</if>
+            <if test="managerPhone != null">manager_phone = #{managerPhone},</if>
+            <if test="branchDesc != null">branch_desc = #{branchDesc},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+        </trim>
+        where branch_id = #{branchId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from cfg_branch where branch_id = #{branchId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="BranchInfoMap">
+        select * from cfg_branch where branch_id = #{branchId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="BranchInfoMap" parameterType="com.loan.service.model.BranchInfo">
+        select * from cfg_branch
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="branchId != null">and branch_id = #{branchId}</if>
+            <if test="bankId != null">and bank_id = #{bankId}</if>
+            <if test="branchName != null">and branch_name = #{branchName}</if>
+            <if test="managerName != null">and manager_name = #{managerName}</if>
+            <if test="managerPhone != null">and manager_phone = #{managerPhone}</if>
+            <if test="branchDesc != null">and branch_desc = #{branchDesc}</if>
+            <if test="createTime != null">and create_time = #{createTime}</if>
+            <if test="modifyTime != null">and modify_time = #{modifyTime}</if>
+        </trim>
+    </sql>
+</mapper>

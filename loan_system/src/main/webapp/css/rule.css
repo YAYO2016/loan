@@ -1,0 +1,96 @@
+@charset "utf-8";
+/* CSS Document */
+
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;font-weight:normal;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+i,cite,em,var,address,dfn{font-style:normal;}
+[hidefocus],summary{outline:0;}
+li{list-style:none;}
+h1,h2,h3,h4,h5,h6,small{font-size:100%;}
+sup,sub{font-size:83%;}
+pre,code,kbd,samp{font-family:inherit;}
+q:before,q:after{content:none;}
+textarea{overflow:auto;resize:none;}
+label,summary{cursor:default;}
+a,button{cursor:pointer;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
+del,ins,u,s,a,a:hover{text-decoration:none;}
+body,textarea,input,button,select,keygen,legend{font:12px/1.14 arial,\5b8b\4f53;color:#333;outline:0;}
+body{background:#fff;}
+a,a:hover{color:#333;}
+.c { clear:both;}
+
+.main{width:1200; position:relative;}
+.container { margin-right:190px;}
+.explain { background-color:#f7f7fd; padding:10px 20px; border:1px solid #e3eef7;}
+.explain span { color:#4d4d4d; line-height:18px;}
+.rule_box ul li.rule { float:left; width:31%; width:31%\0; margin-top:40px;box-shadow:4px 4px 6px #eee; margin-right:20px;} 
+.rule_box ul li.rule:nth-child(3n){ margin-right:0;}
+.rule_top { height:140px; text-align:center; position:relative;}
+.rule1 { background-color:#fabc3d;}
+.rule1_img { width:72px; height:72px; position:absolute; top:-30px; left:38%; background:url(images/rule/rule_1img.png) no-repeat;}
+.rule2 { background-color:#87c8d5;}
+.rule2_img { width:72px; height:72px; position:absolute; top:-30px; left:38%; background:url(images/rule/rule_2img.png) no-repeat;}
+.rule3 { background-color:#636cb3;}
+.rule3_img { width:72px; height:72px; position:absolute; top:-30px; left:38%; background:url(images/rule/rule_3img.png) no-repeat;}
+.rule4 { background-color:#94c83c;}
+.rule4_img { width:72px; height:72px; position:absolute; top:-30px; left:38%; background:url(images/rule/rule_4img.png) no-repeat;}
+.rule5 { background-color:#896c98;}
+.rule5_img { width:72px; height:72px; position:absolute; top:-30px; left:38%; background:url(images/rule/rule_5img.png) no-repeat;}
+.rule6 { background-color:#ff7851;}
+.rule6_img { width:72px; height:72px; position:absolute; top:-30px; left:38%; background:url(images/rule/rule_6img.png) no-repeat;}
+.rule_tit { padding-top:60px; color:#fff;}
+.rule_tit h4 { font-weight:bold; font-size:18px; padding-bottom:10px;}
+.rule_tit p { font-size:12px; line-height:18px;}
+.rule_tit p span { font-weight:bold; color:#2187d9;} 
+.rule_cont { background-color:#f5f5f5; padding:10px; color:#4b4b4b;}
+.rule_cont h4 { line-height:30px;}
+.rule_cont p { margin-bottom:10px; line-height:18px;}
+/*右侧*/
+.right_box { background-color:#f3f3f3; width:180px; position:absolute;right:0; top:0; }
+.right_box .ranking { padding:10px 20px;border-bottom:1px solid #e0e0e0;}
+.right_box .ranking h3 { font-size:14px; color:#333; line-height:28px;}
+.right_box .ranking ul li { line-height:36px; color:#333; } 
+.right_box .ranking ul li i { color:#888; margin-right:10px; display:inline-block; text-align:center;width:22px; height:38px;}
+.right_box .ranking ul li i.first_num { color:#fff; font-weight:bold; background:url(images/rule/first_num.png) no-repeat 1px 7px;}
+.right_box .ranking ul li i.second_num { color:#fff; font-weight:bold; background:url(images/rule/second_num.png) no-repeat 1px 7px;}
+.right_box .ranking ul li i.third_num { color:#fff; font-weight:bold; background:url(images/rule/third_num.png) no-repeat 1px 7px;}
+
+/*引用情况*/
+.cuote ul li { background-color:#f8f8f8; border:1px solid #e6e6e6; height:160px; color:#666; margin-bottom:5px; }
+.place_name { font-size:30px; color:#1882d6; font-family:"Microsoft YaHei UI"; width:130px; text-align:center; border-right:1px solid #efefef; display:inline-block; float:left; line-height:130px;}
+.cuote_cont{ float:left; padding:10px 20px;}
+.cuote_cont table tr td { line-height:34px; width:200px;}
+.data_txt { color:#ff8519; font-size:14px; font-weight:bold;}
+.c_num { font-weight:bold; color:#1882d6; font-size:14px;}
+.rate_num { color:#ff8519; font-size:30px;}
+.btn_box { padding:10px; text-align:center; height:36px; line-height:36px;}
+.btn { background-color:#1882d6; color:#fff; font-weight:bold; padding:10px 50px; margin:0 5px; font-size:14px; border-radius:5px;}
+.btn:hover { color:#fff; background-color:#1271bc;}
+
+/*规则库列表*/
+.screen_box { background-color:#f5f5f5; padding:20px 20px 20px 100px;border-bottom:1px solid #a3abdd;}
+.screen_box:last-of-type {border-bottom:none;}
+.screen_box dl { margin-bottom:5px; }
+.screen_box dl dt{ width:60px; display:inline-block; line-height:30px;}
+.screen_box dl dd { display:inline-block;}
+.input_style { border:1px solid #b4cfdd; height:30px; line-height:30px; padding:0 10px; color:#666;}
+.rule_btn {background-color:#1882d6; color:#fff;  padding:8px 20px; margin:0 5px; font-size:12px; border-radius:5px;}
+.rule_btn:hover { color:#fff; background-color:#1271bc;}
+.check{ display:inline-block; height:24px; line-height:24px; background:url(images/rule/check.png) no-repeat left center; padding-left:24px; cursor:pointer; margin-right:30px;}
+.check_on { background:url(images/rule/check_on.png) no-repeat left center;}
+
+/*新增规则*/
+.required { color:#F00; line-height:36px; font-size:13px; font-weight:bold;}
+.textarea_style { border:1px solid #b4cfdd; padding:10px; color:#666;}
+.radio {display:inline-block; height:24px; line-height:24px; background:url(images/rule/radio.png) no-repeat left center; padding-left:24px; cursor:pointer; margin-right:30px;}
+.radio_on { background:url(images/rule/radio_on.png) no-repeat left center;}
+.newly_tb tr th { background-color:#95a0a7; height:40px; line-height:40px; color:#fff; text-align:center;}
+.newly_tb tr td { background-color:#fff; border-bottom:1px solid #ececec; height:40px; line-height:40px; text-align:center;}
+.tbarr_box {vertical-align:middle; display:inline-block; text-align:center;  position:relative; width:100px;}
+.tbarr_l { display:block; width:35px; height:25px; background:url(images/rule/tbarr_l.png) no-repeat; position:absolute; top:50px; left:30px;}
+.tbarr_r {display:block; width:35px; height:25px; background:url(images/rule/tbarr_r.png) no-repeat; position:absolute; top:90px; left:30px; }
+.b_txt { color:#218ad6; font-weight:bold;}

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseBaseInfoDao">
+    <resultMap id="CasePageInfoDtoMap" type="com.loan.service.model.dto.CasePageInfoDto">
+        <result property="caseId" column="case_id"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createUserName" column="create_user_name"/>
+        <result property="mainCredit" column="main_credit"/>
+        <result property="loanBank" column="loan_bank"/>
+        <result property="caseType" column="case_type"/>
+        <result property="caseSubType" column="case_sub_type"/>
+        <result property="loanType" column="loan_type"/>
+        <result property="reserveAmount" column="reserve_amount"/>
+        <result property="commercialAmount" column="commercial_amount"/>
+        <result property="caseStatus" column="case_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="channelName" column="channel_name"/>
+    </resultMap>
+
+    <sql id="case_page_info_base_sql">
+        select ccbi.case_id,ccbi.create_user,cu.user_name as create_user_name,db.bank_name as loan_bank,ccci.cust_name as main_credit,
+        ccbi.case_type,ccbi.case_sub_type,ccli.loan_type,ccli.reserve_amount,ccli.commercial_amount,ccbi.case_status,ccbi.create_time,
+        cfgc.channel_name,ccbi.modify_time
+        from crdt_case_base_info ccbi
+        left join cfg_user cu on ccbi.create_user = cu.user_id
+        left join crdt_case_loan_info ccli on ccbi.case_id = ccli.case_id
+        left join dict_bank db on db.bank_id = ccli.loan_bank
+        left join case_channel_rel  chal  on ccbi.case_id=chal.case_id
+        left join cfg_channel    cfgc  on cfgc.channel_id=chal.channel_id
+        left join (select * from crdt_case_cust_info where case_cust_type = 'BUYER_MAIN_CREDIT') ccci on ccbi.case_id = ccci.case_id
+        left join (select * from crdt_case_cust_info where case_cust_type = 'SELLER_HOUSE_OWNER') cccis on ccbi.case_id = cccis.case_id
+        left join (select * from crdt_case_cfg_info where cfg_type = 'DEVELOPER_INFO') cccid on ccbi.case_id = cccid.case_id
+        left join (select * from crdt_case_cfg_info where cfg_type = 'CHANNEL_INFO') cccic on ccbi.case_id = cccic.case_id
+    </sql>
+
+    <sql id="case_page_info_base_sql_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="null != mainCredit">and ccci.cust_name like concat('%',#{mainCredit},'%')</if>
+            <if test="null != seller">and (cccis.cust_name like concat('%',#{seller},'%') or cccid.cfg_content->>'$.developerName' like concat('%',#{seller},'%'))</if>
+            <if test="null != mainCreditCoName">and ccci.co_name like concat('%',#{mainCreditCoName},'%')</if>
+            <if test="null != channelName">and cccic.cfg_content->>'$.channelName' like concat('%',#{channelName},'%')</if>
+            <if test="null != caseType">and ccbi.case_type = #{caseType}</if>
+            <if test="null != caseSubType">and ccbi.case_sub_type = #{caseSubType}</if>
+            <if test="null != loanBank">and ccli.loan_bank = #{loanBank}</if>
+            <if test="null != loanBranch">and ccli.loan_bank_branch->>'$.branchId' = #{loanBranch}</if>
+            <if test="null != orgId">and cu.org_id = #{orgId}</if>
+            <if test="null != signUser">and cu.user_id = #{signUser}</if>
+            <if test="null != occuType">and ccci.occu_type = #{occuType}</if>
+            <if test="null != signStartTime">and ccbi.create_time &gt;= #{signStartTime}</if>
+            <if test="null != signEndTime">and ccbi.create_time &lt;= #{signEndTime}</if>
+            and ccbi.del_flag='0'
+        </trim>
+    </sql>
+
+    <select id="countAllCasePageInfo" parameterType="map" resultType="int">
+        select COUNT(t.case_id) from (
+        <include refid="case_page_info_base_sql"/>
+        <include refid="case_page_info_base_sql_where_clause"/>
+        ) t
+    </select>
+
+    <select id="listAllCasePageInfo" parameterType="map" resultMap="CasePageInfoDtoMap">
+        select t.* from (
+        <include refid="case_page_info_base_sql"/>
+        <include refid="case_page_info_base_sql_where_clause"/>
+        ) t
+        order by t.modify_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <select id="countCasePageInfo" parameterType="map" resultType="int">
+        select COUNT(base.case_id) from crdt_case_base_info base
+        left join (select case_id,next_operator_id from crdt_case_operate_log
+        where log_id in (select max(log_id) from crdt_case_operate_log group by case_id)) log on base.case_id =
+        log.case_id
+        <include refid="select_page_where_clause"/>
+    </select>
+
+    <select id="listCasePageInfo" parameterType="map" resultMap="CaseBaseInfoMap">
+        select base.*,cfgc.channel_name from crdt_case_base_info base
+        left join (select case_id,next_operator_id from crdt_case_operate_log
+        where log_id in (select max(log_id) from crdt_case_operate_log group by case_id)) log on base.case_id =
+        log.case_id
+        left join case_channel_rel  chal  on base.case_id=chal.case_id
+        left join cfg_channel    cfgc  on cfgc.channel_id=chal.channel_id
+        <include refid="select_page_where_clause"/>
+        order by base.create_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <sql id="select_page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="1 == pageType">
+                (log.next_operator_id = #{userId} or (base.case_status = 'STATUS_101' and base.create_user = #{userId}))
+            </if>
+            <if test="2 == pageType">
+                base.create_user = #{userId}
+                <if test="1 == ifClose">
+                    and base.case_status &lt;&gt; 'STATUS_120'
+                </if>
+                <if test="2 == ifClose">
+                    and base.case_status = 'STATUS_120'
+                </if>
+            </if>
+            <if test="null != startDate">
+                and base.create_time &gt;= #{startDate}
+            </if>
+            <if test="null != endDate">
+                and base.create_time &lt;= #{endDate}
+            </if>
+              <if test="null != caseStatus">
+               and base.case_status in 
+               <foreach collection="caseStatus" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+           	 </foreach>
+            </if>
+            	and base.del_flag='0'
+        </trim>
+    </sql>
+
+    <select id="countAllMyCasePageInfo" parameterType="map" resultType="int">
+        select COUNT(distinct base.case_id) from crdt_case_base_info base
+        where (case_id in (select case_id from crdt_case_operate_log where next_operator_id = #{userId})
+        or base.create_user = #{userId})
+        <include refid="select_page_where_clause_all_Case"/>
+    </select>
+
+    <select id="listAllMyCasePageInfo" resultMap="CaseBaseInfoMap" parameterType="map">
+        select distinct base.* from crdt_case_base_info base
+        where (case_id in (select case_id from crdt_case_operate_log where next_operator_id = #{userId})
+        or base.create_user = #{userId})
+        <include refid="select_page_where_clause_all_Case"/>
+        order by base.create_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <sql id="select_page_where_clause_all_Case">
+        <if test="1 == ifClose">
+            and base.case_status &lt;&gt; 'STATUS_120'
+        </if>
+        <if test="2 == ifClose">
+            and base.case_status = 'STATUS_120'
+        </if>
+        <if test="null != startDate">
+            and base.create_time &gt;= #{startDate}
+        </if>
+        <if test="null != endDate">
+            and base.create_time &lt;= #{endDate}
+        </if>
+         and  base.del_flag='0'
+    </sql>
+    
+    <update  id="delCase" >
+    	update crdt_case_base_info t set t.del_flag='1' where t.case_id= #{caseId}
+    </update>
+    
+    
+    
+    <select id="getButtonList"  resultType="int">
+    	select  count(*) count from (
+				SELECT
+					base.*
+				FROM
+					crdt_case_base_info base
+				LEFT JOIN (
+					SELECT
+						case_id,
+						next_operator_id
+					FROM
+						crdt_case_operate_log
+					WHERE
+						log_id IN (
+							SELECT
+								max(log_id)
+							FROM
+								crdt_case_operate_log
+							GROUP BY
+								case_id
+						)
+				) log ON base.case_id = log.case_id
+				WHERE
+					(
+						log.next_operator_id = #{userId}
+						OR (
+							base.case_status = 'STATUS_101'
+							AND base.create_user = #{userId}
+						)
+					)  and  base.del_flag='0' ) t  
+    		where t.case_status  in 
+    	
+    		 <foreach collection="caseStatus" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    		
+    </select>
+    
+    
+     <select id="getAllCaseListExport"  parameterType="map" resultMap="CasePageInfoDtoMap">
+        select t.* from (
+        <include refid="case_page_info_base_sql"/>
+        <include refid="case_page_info_base_sql_where_clause"/>
+        ) t
+        order by t.create_time desc
+    </select>
+    
+    
+    
+</mapper>

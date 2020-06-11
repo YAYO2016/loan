@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseLoanInfoDao">
+    <update id="clearReserveInfoByCaseId" parameterType="long">
+        update crdt_case_loan_info set reserve_amount = null,reserve_year = null where case_id = ${caseId}
+    </update>
+
+    <update id="clearCommercialInfoByCaseId" parameterType="long">
+        update crdt_case_loan_info set commercial_amount = null,commercial_year = null where case_id = ${caseId}
+    </update>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.UserRolesDao">
+
+    <resultMap id="UserRolesDtoMap" type="com.loan.service.model.dto.UserRolesDto" extends="UserRolesMap">
+        <result property="roleName" column="role_name"/>
+    </resultMap>
+
+    <select id="getUserRolesDtoByUserId" resultMap="UserRolesDtoMap">
+        select *,dr.role_name from cfg_user_role cur
+        left join dict_role dr on cur.role_id = dr.role_id
+        where cur.user_id = #{userId}
+    </select>
+
+    <update id="clearUserRolesByUserId">
+        delete from cfg_user_role where user_id = #{userId}
+    </update>
+</mapper>

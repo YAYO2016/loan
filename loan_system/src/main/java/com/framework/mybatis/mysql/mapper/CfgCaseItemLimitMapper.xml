@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.mybatis.mysql.mapper.CfgCaseItemLimitMapper" >
+  <resultMap id="BaseResultMap" type="com.framework.mybatis.mysql.pojo.CfgCaseItemLimit" >
+    <result column="case_type" property="caseType" jdbcType="VARCHAR" />
+    <result column="scage_id" property="scageId" jdbcType="VARCHAR" />
+    <result column="step_id" property="stepId" jdbcType="VARCHAR" />
+    <result column="colm_name" property="colmName" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="VARCHAR" />
+    <result column="is_req" property="isReq" jdbcType="VARCHAR" />
+    <result column="is_modify" property="isModify" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    case_type, scage_id, step_id, colm_name, is_show, is_req, is_modify
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.framework.mybatis.mysql.pojo.CfgCaseItemLimitExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cfg_case_item_limit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.framework.mybatis.mysql.pojo.CfgCaseItemLimitExample" >
+    delete from cfg_case_item_limit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.framework.mybatis.mysql.pojo.CfgCaseItemLimit" >
+    insert into cfg_case_item_limit (case_type, scage_id, step_id, 
+      colm_name, is_show, is_req, 
+      is_modify)
+    values (#{caseType,jdbcType=VARCHAR}, #{scageId,jdbcType=VARCHAR}, #{stepId,jdbcType=VARCHAR}, 
+      #{colmName,jdbcType=VARCHAR}, #{isShow,jdbcType=VARCHAR}, #{isReq,jdbcType=VARCHAR}, 
+      #{isModify,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.framework.mybatis.mysql.pojo.CfgCaseItemLimit" >
+    insert into cfg_case_item_limit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseType != null" >
+        case_type,
+      </if>
+      <if test="scageId != null" >
+        scage_id,
+      </if>
+      <if test="stepId != null" >
+        step_id,
+      </if>
+      <if test="colmName != null" >
+        colm_name,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="isReq != null" >
+        is_req,
+      </if>
+      <if test="isModify != null" >
+        is_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseType != null" >
+        #{caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="scageId != null" >
+        #{scageId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepId != null" >
+        #{stepId,jdbcType=VARCHAR},
+      </if>
+      <if test="colmName != null" >
+        #{colmName,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="isReq != null" >
+        #{isReq,jdbcType=VARCHAR},
+      </if>
+      <if test="isModify != null" >
+        #{isModify,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.framework.mybatis.mysql.pojo.CfgCaseItemLimitExample" resultType="java.lang.Integer" >
+    select count(*) from cfg_case_item_limit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cfg_case_item_limit
+    <set >
+      <if test="record.caseType != null" >
+        case_type = #{record.caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scageId != null" >
+        scage_id = #{record.scageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepId != null" >
+        step_id = #{record.stepId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.colmName != null" >
+        colm_name = #{record.colmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShow != null" >
+        is_show = #{record.isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isReq != null" >
+        is_req = #{record.isReq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isModify != null" >
+        is_modify = #{record.isModify,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cfg_case_item_limit
+    set case_type = #{record.caseType,jdbcType=VARCHAR},
+      scage_id = #{record.scageId,jdbcType=VARCHAR},
+      step_id = #{record.stepId,jdbcType=VARCHAR},
+      colm_name = #{record.colmName,jdbcType=VARCHAR},
+      is_show = #{record.isShow,jdbcType=VARCHAR},
+      is_req = #{record.isReq,jdbcType=VARCHAR},
+      is_modify = #{record.isModify,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

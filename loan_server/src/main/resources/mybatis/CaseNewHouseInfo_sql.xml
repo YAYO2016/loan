@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.CaseNewHouseInfoDao">
+    <resultMap id="CaseNewHouseInfoMap" type="com.loan.service.model.CaseNewHouseInfo">
+        <result property="caseId" column="case_id"/>
+        <result property="houseProperty" column="house_property"/>
+        <result property="contractCode" column="contract_code"/>
+        <result property="houseAddress" column="house_address"/>
+        <result property="houseArea" column="house_area"/>
+        <result property="contractAmount" column="contract_amount"/>
+        <result property="contractPrice" column="contract_price"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.CaseNewHouseInfo">
+        INSERT INTO crdt_case_new_house_info (
+        <trim suffixOverrides=",">
+            case_id,
+            house_property,
+            contract_code,
+            house_address,
+            house_area,
+            contract_amount,
+            contract_price,
+            create_time,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{caseId},
+            #{houseProperty},
+            #{contractCode},
+            #{houseAddress},
+            #{houseArea},
+            #{contractAmount},
+            #{contractPrice},
+            #{createTime},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.CaseNewHouseInfo">
+        update crdt_case_new_house_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="caseId != null">case_id = #{caseId},</if>
+            <if test="houseProperty != null">house_property = #{houseProperty},</if>
+            <if test="contractCode != null">contract_code = #{contractCode},</if>
+            <if test="houseAddress != null">house_address = #{houseAddress},</if>
+            <if test="houseArea != null">house_area = #{houseArea},</if>
+            <if test="contractAmount != null">contract_amount = #{contractAmount},</if>
+            <if test="contractPrice != null">contract_price = #{contractPrice},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where case_id = #{caseId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from crdt_case_new_house_info where case_id = #{caseId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="CaseNewHouseInfoMap">
+        select * from crdt_case_new_house_info where case_id = #{caseId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="CaseNewHouseInfoMap" parameterType="com.loan.service.model.CaseNewHouseInfo">
+        select * from crdt_case_new_house_info
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="caseId != null">and case_id = #{caseId}</if>
+            <if test="houseProperty != null">and house_property = #{houseProperty}</if>
+            <if test="contractCode != null">and contract_code = #{contractCode}</if>
+            <if test="houseAddress != null">and house_address = #{houseAddress}</if>
+            <if test="houseArea != null">and house_area = #{houseArea}</if>
+            <if test="contractAmount != null">and contract_amount = #{contractAmount}</if>
+            <if test="contractPrice != null">and contract_price = #{contractPrice}</if>
+            <if test="createTime != null">and create_time = #{createTime}</if>
+        </trim>
+    </sql>
+</mapper>

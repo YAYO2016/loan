@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.ChannelInfoDao">
+    <resultMap id="ChannelInfoMap" type="com.loan.service.model.ChannelInfo">
+        <result property="channelId" column="channel_id"/>
+        <result property="channelType" column="channel_type"/>
+        <result property="channelName" column="channel_name"/>
+        <result property="channelPhone" column="channel_phone"/>
+        <result property="channelAddress" column="channel_address"/>
+        <result property="bossName" column="boss_name"/>
+        <result property="bossMphone" column="boss_mphone"/>
+        <result property="accountName" column="account_name"/>
+        <result property="accountBank" column="account_bank"/>
+        <result property="accountNo" column="account_no"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createUserName" column="create_user_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="areaName" column="area_name"/>
+        <result property="tradeModel" column="trade_model"/>
+        <result property="storeName" column="store_name"/>
+        <result property="regName" column="reg_name"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.ChannelInfo">
+        INSERT INTO cfg_channel (
+        <trim suffixOverrides=",">
+            channel_id,
+            channel_type,
+            channel_name,
+            channel_phone,
+            channel_address,
+            boss_name,
+            boss_mphone,
+            account_name,
+            account_bank,
+            account_no,
+            create_user,
+            create_user_name,
+            create_time,
+            modify_time,
+            area_name,
+            trade_model,
+            store_name,
+            reg_name,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{channelId},
+            #{channelType},
+            #{channelName},
+            #{channelPhone},
+            #{channelAddress},
+            #{bossName},
+            #{bossMphone},
+            #{accountName},
+            #{accountBank},
+            #{accountNo},
+            #{createUser},
+            #{createUserName},
+            #{createTime},
+            #{modifyTime},
+            #{areaName},
+            #{tradeModel},
+            #{storeName},
+            #{regName},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.ChannelInfo">
+        update cfg_channel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="channelId != null">channel_id = #{channelId},</if>
+            <if test="channelType != null">channel_type = #{channelType},</if>
+            <if test="channelName != null">channel_name = #{channelName},</if>
+            <if test="channelPhone != null">channel_phone = #{channelPhone},</if>
+            <if test="channelAddress != null">channel_address = #{channelAddress},</if>
+            <if test="bossName != null">boss_name = #{bossName},</if>
+            <if test="bossMphone != null">boss_mphone = #{bossMphone},</if>
+            <if test="accountName != null">account_name = #{accountName},</if>
+            <if test="accountBank != null">account_bank = #{accountBank},</if>
+            <if test="accountNo != null">account_no = #{accountNo},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createUserName != null">create_user_name = #{createUserName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="areaName != null">area_name = #{areaName},</if>
+            <if test="tradeModel != null">trade_model = #{tradeModel},</if>
+            <if test="storeName != null">store_name = #{storeName},</if>
+            <if test="regName != null">reg_name = #{regName},</if>
+        </trim>
+        where channel_id = #{channelId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from cfg_channel where channel_id = #{channelId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="ChannelInfoMap">
+        select * from cfg_channel where channel_id = #{channelId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="ChannelInfoMap" parameterType="com.loan.service.model.ChannelInfo">
+        select * from cfg_channel
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="channelId != null">AND channel_id = #{channelId}</if>
+            <if test="channelType != null">AND channel_type = #{channelType}</if>
+            <if test="channelName != null">AND channel_name = #{channelName}</if>
+            <if test="channelPhone != null">AND channel_phone = #{channelPhone}</if>
+            <if test="channelAddress != null">AND channel_address = #{channelAddress}</if>
+            <if test="bossName != null">AND boss_name = #{bossName}</if>
+            <if test="bossMphone != null">AND boss_mphone = #{bossMphone}</if>
+            <if test="accountName != null">AND account_name = #{accountName}</if>
+            <if test="accountBank != null">AND account_bank = #{accountBank}</if>
+            <if test="accountNo != null">AND account_no = #{accountNo}</if>
+            <if test="createUser != null">AND create_user = #{createUser}</if>
+            <if test="createTime != null">AND create_time = #{createTime}</if>
+            <if test="modifyTime != null">AND modify_time = #{modifyTime}</if>
+            <if test="areaName != null">AND area_name = #{areaName},</if>
+            <if test="tradeModel != null">AND trade_model = #{tradeModel},</if>
+            <if test="storeName != null">AND store_name = #{storeName},</if>
+            <if test="regName != null">AND reg_name = #{regName},</if>
+        </trim>
+    </sql>
+</mapper>

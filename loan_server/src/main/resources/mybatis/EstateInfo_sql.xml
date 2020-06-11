@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.EstateInfoDao">
+    <resultMap id="EstateInfoMap" type="com.loan.service.model.EstateInfo">
+        <result property="estateId" column="estate_id"/>
+        <result property="developerId" column="developer_id"/>
+        <result property="estateName" column="estate_name"/>
+        <result property="estateTel" column="estate_tel"/>
+        <result property="estateAddr" column="estate_addr"/>
+        <result property="managerName" column="manager_name"/>
+        <result property="managerTel" column="manager_tel"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.EstateInfo">
+        INSERT INTO cfg_estate (
+        <trim suffixOverrides=",">
+            estate_id,
+            developer_id,
+            estate_name,
+            estate_tel,
+            estate_addr,
+            manager_name,
+            manager_tel,
+            create_time,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{estateId},
+            #{developerId},
+            #{estateName},
+            #{estateTel},
+            #{estateAddr},
+            #{managerName},
+            #{managerTel},
+            #{createTime},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.EstateInfo">
+        update cfg_estate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="estateId != null">estate_id = #{estateId},</if>
+            <if test="developerId != null">developer_id = #{developerId},</if>
+            <if test="estateName != null">estate_name = #{estateName},</if>
+            <if test="estateTel != null">estate_tel = #{estateTel},</if>
+            <if test="estateAddr != null">estate_addr = #{estateAddr},</if>
+            <if test="managerName != null">manager_name = #{managerName},</if>
+            <if test="managerTel != null">manager_tel = #{managerTel},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where estate_id = #{estateId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from cfg_estate where estate_id = #{estateId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="EstateInfoMap">
+        select * from cfg_estate where estate_id = #{estateId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="EstateInfoMap" parameterType="com.loan.service.model.EstateInfo">
+        select * from cfg_estate
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="estateId != null">and estate_id = #{estateId}</if>
+            <if test="developerId != null">and developer_id = #{developerId}</if>
+            <if test="estateName != null">and estate_name = #{estateName}</if>
+            <if test="estateTel != null">and estate_tel = #{estateTel}</if>
+            <if test="estateAddr != null">and estate_addr = #{estateAddr}</if>
+            <if test="managerName != null">and manager_name = #{managerName}</if>
+            <if test="managerTel != null">and manager_tel = #{managerTel}</if>
+            <if test="createTime != null">and create_time = #{createTime}</if>
+        </trim>
+    </sql>
+</mapper>

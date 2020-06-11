@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.BranchInfoDao">
+
+    <resultMap id="BranchInfoDtoMap" type="com.loan.service.model.dto.BranchInfoDto" extends="BranchInfoMap">
+        <result property="bankName" column="bank_name"/>
+    </resultMap>
+
+    <select id="countBranchInfoDto" parameterType="map" resultType="int">
+        select COUNT(cb.branch_id) from cfg_branch cb
+        left join dict_bank db on cb.bank_id = db.bank_id
+        <include refid="select_page_where_clause"/>
+    </select>
+
+    <select id="listBranchInfoDto" parameterType="map" resultMap="BranchInfoDtoMap">
+        select cb.*,db.bank_name from cfg_branch cb
+        left join dict_bank db on cb.bank_id = db.bank_id
+        <include refid="select_page_where_clause"/>
+        order by cb.modify_time desc
+        LIMIT ${offSet},${pageSize}
+    </select>
+
+    <sql id="select_page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="branchName != null">and cb.branch_name like concat('%',#{branchName},'%')</if>
+            <if test="bankId != null">and db.bank_id like concat('%',#{bankId},'%')</if>
+        </trim>
+    </sql>
+</mapper>

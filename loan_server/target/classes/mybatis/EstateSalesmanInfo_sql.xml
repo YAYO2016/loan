@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.loan.service.dao.EstateSalesmanInfoDao">
+    <resultMap id="EstateSalesmanInfoMap" type="com.loan.service.model.EstateSalesmanInfo">
+        <result property="salesmanId" column="salesman_id"/>
+        <result property="estateId" column="estate_id"/>
+        <result property="salesmanName" column="salesman_name"/>
+        <result property="salesmanTel" column="salesman_tel"/>
+        <result property="officeTel" column="office_tel"/>
+        <result property="accountName" column="account_name"/>
+        <result property="accountBank" column="account_bank"/>
+        <result property="accountNo" column="account_no"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.loan.service.model.EstateSalesmanInfo">
+        INSERT INTO cfg_estate_salesman (
+        <trim suffixOverrides=",">
+            salesman_id,
+            estate_id,
+            salesman_name,
+            salesman_tel,
+            office_tel,
+            account_name,
+            account_bank,
+            account_no,
+            create_time,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{salesmanId},
+            #{estateId},
+            #{salesmanName},
+            #{salesmanTel},
+            #{officeTel},
+            #{accountName},
+            #{accountBank},
+            #{accountNo},
+            #{createTime},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateByPk" parameterType="com.loan.service.model.EstateSalesmanInfo">
+        update cfg_estate_salesman
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="salesmanId != null">salesman_id = #{salesmanId},</if>
+            <if test="estateId != null">estate_id = #{estateId},</if>
+            <if test="salesmanName != null">salesman_name = #{salesmanName},</if>
+            <if test="salesmanTel != null">salesman_tel = #{salesmanTel},</if>
+            <if test="officeTel != null">office_tel = #{officeTel},</if>
+            <if test="accountName != null">account_name = #{accountName},</if>
+            <if test="accountBank != null">account_bank = #{accountBank},</if>
+            <if test="accountNo != null">account_no = #{accountNo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where salesman_id = #{salesmanId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from cfg_estate_salesman where salesman_id = #{salesmanId}
+    </delete>
+
+    <select id="getOneByPrimaryKey" parameterType="long" resultMap="EstateSalesmanInfoMap">
+        select * from cfg_estate_salesman where salesman_id = #{salesmanId}
+    </select>
+
+    <select id="getAllItemsByQueryObject" resultMap="EstateSalesmanInfoMap" parameterType="com.loan.service.model.EstateSalesmanInfo">
+        select * from cfg_estate_salesman
+        <include refid="select_where_clause"/>
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="salesmanId != null">and salesman_id = #{salesmanId}</if>
+            <if test="estateId != null">and estate_id = #{estateId}</if>
+            <if test="salesmanName != null">and salesman_name = #{salesmanName}</if>
+            <if test="salesmanTel != null">and salesman_tel = #{salesmanTel}</if>
+            <if test="officeTel != null">and office_tel = #{officeTel}</if>
+            <if test="accountName != null">and account_name = #{accountName}</if>
+            <if test="accountBank != null">and account_bank = #{accountBank}</if>
+            <if test="accountNo != null">and account_no = #{accountNo}</if>
+            <if test="createTime != null">and create_time = #{createTime}</if>
+        </trim>
+    </sql>
+</mapper>
